@@ -5,11 +5,12 @@ import logo from "./assets/img/logo.svg";
 import favicon from "./assets/img/favicon.png";
 
 const website = "https://www.aachenvalley.de"
+const privacy = "https://www.aachenvalley.de/?page_id=382"
 const configuration = {
     name: "Aachen Valley",
     website: website,
     imprint: "https://www.aachenvalley.de/?page_id=388",
-    privacy: "https://www.aachenvalley.de/?page_id=382",
+    privacy: privacy,
     term: "https://www.aachenvalley.de/?page_id=388",
     slogan: <span >
         Made with {" "}
@@ -75,7 +76,27 @@ const configuration = {
         ],
         blackColor: "#0e1b2c"
     },
-    listActiveItemColor: "orange"
+    listActiveItemColor: "orange",
+    cookie: {
+        name: "dataIsBeautifulCookie",
+        style: {
+            background: "#007db1"
+        },
+        buttonStyle: {
+            background: "white",
+            color: "black",
+            fontSize: "13px"
+        },
+        button: "Akzeptieren",
+        text: <div>Wir benutzen Cookies, um die Nutzerfreundlichkeit der Website zu
+            verbessern. Durch die Nutzung unserer Website stimmen Sie unserer Verwendung von
+            Cookies zu.<br/>
+            <a
+                href={privacy}
+                target="_blank"
+                rel="noopener noreferrer">Mehr Informationen</a>
+        </div>
+    }
 
 }
 

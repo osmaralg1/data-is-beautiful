@@ -21,6 +21,8 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import {Helmet} from "react-helmet";
 
+import CookieConsent from "react-cookie-consent";
+
 // core components
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
@@ -48,6 +50,16 @@ ReactDOM.render(
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>
+    <CookieConsent
+        location="bottom"
+        buttonText= {configuration.cookie.button}
+        cookieName={configuration.cookie.name}
+        style={configuration.cookie.style}
+        buttonStyle={configuration.cookie.buttonStyle}
+        expires={150}
+      >
+        {configuration.cookie.text}
+      </CookieConsent>
   </Router>,
   document.getElementById("root")
 );
