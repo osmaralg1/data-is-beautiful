@@ -84,6 +84,7 @@ export default function Sidebar(props) {
   );
   var brand = (
     <div className={classes.logo}>
+      
       <a
         href={configuration.website}
         className={classNames(classes.logoLink, {
@@ -91,12 +92,17 @@ export default function Sidebar(props) {
         })}
         target="_blank"
       >
-        <div className={classes.logoImage}>
+        {logoText !== null && logoText !== undefined ?
+        [<div className={classes.logoImage}>
           <img src={logo} alt="logo" className={classes.img} />
-        </div>
-        {logoText}
+        </div>,
+        logoText] :
+        <div>
+          <img src={logo} alt="logo" />
+        </div> }
+
       </a>
-    </div>
+    </div> 
   );
   return (
     <div>
@@ -156,7 +162,7 @@ export default function Sidebar(props) {
 Sidebar.propTypes = {
   rtlActive: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
-  bgColor: PropTypes.oneOf(["purple", "blue", "green", "orange", "red"]),
+  color: PropTypes.oneOf(["purple", "blue", "green", "orange", "red"]),
   logo: PropTypes.string,
   image: PropTypes.string,
   logoText: PropTypes.string,

@@ -80,7 +80,7 @@ const successColor = configuration.color.successColor;
 const infoColor = configuration.color.infoColor;
 const roseColor = configuration.color.roseColor;
 const grayColor = configuration.color.grayColor;
-const blackColor = "#000";
+const blackColor = configuration.color.blackColor;
 const whiteColor = "#FFF";
 
 const boxShadow = {

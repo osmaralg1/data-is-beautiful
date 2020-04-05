@@ -46,7 +46,7 @@ export default function Admin({ ...rest }) {
   const mainPanel = React.createRef();
   // states and functions
   const image = configuration.bgImage;
-  const color = "blue";
+  const color = configuration.listActiveItemColor;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
 

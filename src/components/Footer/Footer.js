@@ -1,12 +1,13 @@
 /*eslint-disable*/
 import React from "react";
-import PropTypes from "prop-types";
+
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 // core components
 import styles from "assets/jss/material-dashboard-react/components/footerStyle.js";
+import {configuration} from 'variables/configuration'
 
 const useStyles = makeStyles(styles);
 
@@ -14,45 +15,40 @@ export default function Footer(props) {
   const classes = useStyles();
   return (
     <footer className={classes.footer}>
-      <div className={classes.container}>
-        <div className={classes.left}>
+      <div
+        className={classes.container}
+        style={{
+        textAlign: "center"
+      }}>
+        <div>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href="#home" className={classes.block}>
-                Home
+              <a href={configuration.website} target="_blank" className={classes.block}>
+                {configuration.name}
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="#company" className={classes.block}>
-                Company
+              <a href={configuration.imprint} target="_blank" className={classes.block}>
+                Impressum
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="#portfolio" className={classes.block}>
-                Portfolio
+              <a href={configuration.privacy} target="_blank" className={classes.block}>
+                Datenschutz
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href="#blog" className={classes.block}>
-                Blog
+              <a href={props.terms} target="_blank" className={classes.block}>
+                AGB
               </a>
             </ListItem>
           </List>
         </div>
-        <p className={classes.right}>
-          <span>
-            &copy; {1900 + new Date().getYear()}{" "}
-            <a
-              href="https://www.creative-tim.com?ref=mdr-footer"
-              target="_blank"
-              className={classes.a}
-            >
-              Creative Tim
-            </a>
-            , made with love for a better web
-          </span>
+        <p >
+          {configuration.slogan}
         </p>
       </div>
+      <div></div>
     </footer>
   );
 }

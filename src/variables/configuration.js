@@ -1,9 +1,38 @@
+import React from "react";
+
+import Heart from "@material-ui/icons/Favorite";
 import logo from "./assets/img/logo.svg";
 import favicon from "./assets/img/favicon.png";
 
+const website = "https://www.aachenvalley.de"
 const configuration = {
-    website: "https://www.aachenvalley.de",
-    logoText: "Aachen Valley",
+    name: "Aachen Valley",
+    website: website,
+    imprint: "https://www.aachenvalley.de/?page_id=388",
+    privacy: "https://www.aachenvalley.de/?page_id=382",
+    term: "https://www.aachenvalley.de/?page_id=388",
+    slogan: <span >
+        Made with {" "}
+        <Heart style={{
+            fill: "red"
+        }}/>
+        {" "}
+        by
+        {" "}
+        <a
+            href={website}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+            color: "#b5cf59",
+            fontWeight: "bold"
+        }}>
+            <text style={{
+                color: "#36a0ca"
+            }}>Aachen</text>
+            {" "}Valley</a>
+    </span>,
+    logoText: null,
     logo: logo,
     bgImage: null,
     title: "Data is beautiful - Aachen Valley",
@@ -13,19 +42,19 @@ const configuration = {
     appleTouchIcon: favicon,
     color: {
         primaryColor: [
-            "#9c27b0", "#ab47bc", "#8e24aa", "#af2cc5"
+            "#45AC34", "#ab47bc", "#8e24aa", "#af2cc5"
         ],
         warningColor: [
-            "#ff9800", "#ffa726", "#fb8c00", "#ffa21a"
+            "#8fa200", "#c3d332", "#f9ff68", "#ffff9b"
         ],
         dangerColor: [
             "#f44336", "#ef5350", "#e53935", "#f55a4e"
         ],
         successColor: [
-            "#4caf50", "#66bb6a", "#43a047", "#5cb860"
+            "#004a00", "#007700", "#48A737", "#7cd966"
         ],
         infoColor: [
-            "#00acc1", "#26c6da", "#00acc1", "#00d3ee"
+            "#005181", "#007db1", "#30ACE3", "#73deff"
         ],
         roseColor: [
             "#e91e63", "#ec407a", "#d81b60", "#eb3573"
@@ -43,8 +72,10 @@ const configuration = {
             "#a9afbb",
             "#eee",
             "#e7e7e7"
-        ]
-    }
+        ],
+        blackColor: "#0e1b2c"
+    },
+    listActiveItemColor: "orange"
 
 }
 
