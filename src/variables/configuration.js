@@ -46,7 +46,7 @@ const configuration = {
             "#45AC34", "#ab47bc", "#8e24aa", "#af2cc5"
         ],
         warningColor: [
-            "#8fa200", "#c3d332", "#f9ff68", "#ffff9b"
+            "#8fa200", "#c3d332", "#c3cc34", "#f9ff68"
         ],
         dangerColor: [
             "#f44336", "#ef5350", "#e53935", "#f55a4e"
