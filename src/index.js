@@ -19,6 +19,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 // core components
 import Admin from "layouts/Admin.js";
@@ -26,10 +27,22 @@ import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
+import {configuration} from 'variables/configuration'
+
 const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
+    <Helmet>
+          <title>{configuration.title}</title>
+          <meta name="description" content={configuration.description} />
+          <link rel="icon" type="image/png" href={configuration.favicon} sizes="16x16" />
+          <link
+              rel="apple-touch-icon"
+              sizes="76x76"
+              href={configuration.appleTouchIcon}
+            />
+      </Helmet>
     <Switch>
       <Route path="/admin" component={Admin} />
       <Route path="/rtl" component={RTL} />
