@@ -30,13 +30,7 @@ export default function Dashboard() {
 
       <GridItem xs={12} sm={12} md={12}>
           <Card chart>
-            <CardHeader color="info">
-              <RealtimeChart/>
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Realtime Simulation</h4>
-              <p className={classes.cardCategory}>Random Number</p>
-            </CardBody>
+              <RealtimeChart color={"info"} title="Infected People" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -48,24 +42,7 @@ export default function Dashboard() {
 
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <CardHeader color="success">
-              <ChartistGraph
-                className="ct-chart"
-                data={dailySalesChart.data}
-                type="Line"
-                options={dailySalesChart.options}
-                listener={dailySalesChart.animation}/>
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Daily Sales</h4>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory}/>
-                  55%
-                </span>{" "}
-                increase in today sales.
-              </p>
-            </CardBody>
+            <RealtimeChart color={"success"} title="People with syntoms" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -76,19 +53,7 @@ export default function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <CardHeader color="warning">
-              <ChartistGraph
-                className="ct-chart"
-                data={emailsSubscriptionChart.data}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                listener={emailsSubscriptionChart.animation}/>
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Email Subscriptions</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
+            <RealtimeChart color={"warning"} title="People seriously ill" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -99,18 +64,7 @@ export default function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <CardHeader color="danger">
-              <ChartistGraph
-                className="ct-chart"
-                data={completedTasksChart.data}
-                type="Line"
-                options={completedTasksChart.options}
-                listener={completedTasksChart.animation}/>
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
+            <RealtimeChart color={"danger"} title="Lost lives" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
