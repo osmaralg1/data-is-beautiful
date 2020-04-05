@@ -14,6 +14,7 @@ import AdminNavbarLinks from "./AdminNavbarLinks.js";
 import RTLNavbarLinks from "./RTLNavbarLinks.js";
 import Button from "components/CustomButtons/Button.js";
 
+import {configuration} from 'variables/configuration'
 import styles from "assets/jss/material-dashboard-react/components/headerStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -43,9 +44,10 @@ export default function Header(props) {
             {makeBrand()}
           </Button>
         </div>
+       {configuration.showNavbarLink === true ?
         <Hidden smDown implementation="css">
           {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
-        </Hidden>
+        </Hidden> : null } 
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"

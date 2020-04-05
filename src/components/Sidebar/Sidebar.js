@@ -122,8 +122,10 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
+          
           <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+            {configuration.showNavbarLink === true ?  props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks /> : null}
+           
             {links}
           </div>
           {image !== undefined ? (

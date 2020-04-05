@@ -96,7 +96,8 @@ const configuration = {
                 target="_blank"
                 rel="noopener noreferrer">Mehr Informationen</a>
         </div>
-    }
+    },
+    showNavbarLink: false
 
 }
 
