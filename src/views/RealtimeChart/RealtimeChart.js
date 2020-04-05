@@ -13,18 +13,12 @@ function getRandomInt(min, max) {
 function RealTime({ className, ...rest }) {
 
   const [data, setData] = useState([
-    163,
-    166,
-    161,
-    159,
-    99,
-    163,
-    173,
-    166,
-    167,
-    183,
-    176,
-    172
+    0,
+    1,
+    6,
+    36,
+    216,
+    1296,
   ]);
 
   const [labels, setLabels] = useState(data.map((value, i) => (i + 1) + ". Day"));
@@ -42,8 +36,11 @@ function RealTime({ className, ...rest }) {
           setData((prevData) => {
             const newData = [...prevData];
             const random = getRandomInt(100, 200);
-            newData.shift()
-            newData.push(random);
+            //newData[2] = newData[1]*5 + newData[1]
+            const lastItem = newData[newData.length - 1] * 5 + newData[newData.length - 1]
+            //newData.shift()
+            newData.push(lastItem)
+            console.log(newData)
 
             return newData;
           });
@@ -53,7 +50,7 @@ function RealTime({ className, ...rest }) {
             setLabels((label) => {
               const newLabel = [...label];
     
-              newLabel.shift();
+              //snewLabel.shift();
               newLabel.push((oldIndex + 1) + ". Day");
     
               return newLabel;

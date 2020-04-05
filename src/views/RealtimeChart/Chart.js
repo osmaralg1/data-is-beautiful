@@ -10,9 +10,14 @@ function Chart(props) {
     series: [props.data]
   }
 
+  const options = {
+    high: 1000,
+    low: -10,
+  }
+
   return (
     <div>
-      <ChartistGraph className="ct-chart" data={data} type="Line"/>
+      <ChartistGraph className="ct-chart" data={data} type="Line" />
     </div>
   );
 }
