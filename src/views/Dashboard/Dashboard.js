@@ -34,7 +34,7 @@ export default function Dashboard() {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                Random Number set every 500 milliseconds
+                Infection rate: 1 person will infect in average 5 other persons.
               </div>
             </CardFooter>
           </Card>
