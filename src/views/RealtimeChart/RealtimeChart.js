@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 
 import PropTypes from 'prop-types';
 import Chart from "./Chart.js";
@@ -8,7 +8,6 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 const useStyles = makeStyles(styles);
 
-
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -16,30 +15,43 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
-
-function RealTime( props, { className, ...rest }) {
+function RealTime(props, {
+  className,
+  ...rest
+}) {
 
   const classes = useStyles();
-  const [data, setData] = useState([0,1,2]);
-
-
-  const [options, setOptions] = useState({
-        chart: {
-          id: "basic-bar"
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-        }
-      })
-  const [series, setSeries] = useState([{
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-          }]
-        )
-
-
-  const [index, setIndex] = useState(data.length);
+  const [timeSeries,
+    setTimeSeries] = useState([
+    {
+      timeStamp: 1991,
+      value: 30
+    }, {
+      timeStamp: 1992,
+      value: 40
+    }, {
+      timeStamp: 1993,
+      value: 45
+    }, {
+      timeStamp: 1994,
+      value: 50
+    }, {
+      timeStamp: 1995,
+      value: 51
+    }, {
+      timeStamp: 1996,
+      value: 49
+    }, {
+      timeStamp: 1997,
+      value: 60
+    }, {
+      timeStamp: 1998,
+      value: 70
+    }, {
+      timeStamp: 1999,
+      value: 91
+    }
+  ]);
 
   useEffect(() => {
     let mounted = true;
@@ -48,29 +60,18 @@ function RealTime( props, { className, ...rest }) {
       setTimeout(() => {
 
         if (mounted) {
+          setTimeSeries((oldSeries) => {
+            const series = [...oldSeries]
 
-
-
-          setIndex((oldIndex) => {
-
-            setSeries((oldSeries) => {
-              const series =  [...oldSeries]
-              //console.log(series)
-              series[0].data.shift()
-              series[0].data.push(getRandomInt(0, 100))
-              return series;
+            series.shift()
+            series.push({
+              timeStamp: series[series.length - 1].timeStamp + 1,
+              value: getRandomInt(0, 100)
             })
+            console.log(series)
+            return series;
+          })
 
-            setOptions((oldOptions) => {
-              const options = {...oldOptions}
-              options.xaxis.categories.shift()
-              options.xaxis.categories.push(options.xaxis.categories[options.xaxis.categories.length - 1] + 1)
-              return options
-            })
-
-  
-            return oldIndex + 1
-          });
         }
       }, 500);
     }, 500);
@@ -78,17 +79,17 @@ function RealTime( props, { className, ...rest }) {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [timeSeries]);
 
   return (
     <div>
-          <CardHeader color={props.color}>
-            <Chart  />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>{props.title}</h4>
-              <p className={classes.cardCategory}> </p>
-            </CardBody>
+      <CardHeader color={props.color}>
+        <Chart timeSeries={timeSeries}/>
+      </CardHeader>
+      <CardBody>
+        <h4 className={classes.cardTitle}>{props.title}</h4>
+        <p className={classes.cardCategory}></p>
+      </CardBody>
     </div>
 
   );
