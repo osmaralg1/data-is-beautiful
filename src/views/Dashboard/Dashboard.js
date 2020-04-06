@@ -39,7 +39,7 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-
+      {/** 
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <RealtimeChart color={"success"} title="People with syntoms" />
@@ -73,6 +73,7 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
+        **/}
       </GridContainer>
     </div>
   );
