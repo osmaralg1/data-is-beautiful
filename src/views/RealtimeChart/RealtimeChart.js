@@ -85,10 +85,7 @@ function RealTime( props, { className, ...rest }) {
           <CardHeader color={props.color}>
             <Chart  />
             </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>{props.title}</h4>
-              <p className={classes.cardCategory}> </p>
-            </CardBody>
+
     </div>
 
   );

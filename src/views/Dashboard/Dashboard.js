@@ -13,7 +13,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import RealtimeChart from "views/RealtimeChart/RealtimeChart.js";
+import Chart from "views/RealtimeChart/Chart.js";
 
 
 import {dailySalesChart, emailsSubscriptionChart, completedTasksChart} from "variables/charts.js";
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       <GridItem xs={12} sm={12} md={12}>
           <Card chart>
-              <RealtimeChart color={"info"} title="Infected People" />
+              <Chart title="Infected People" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
