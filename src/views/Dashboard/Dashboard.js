@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       <GridItem xs={12} sm={12} md={12}>
           <Card chart>
-              <RealtimeChart color={"info"} title="Infected People" />
+              <RealtimeChart color='rgba(26,39,55,200)' title="Infected People" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>

@@ -13,13 +13,25 @@ function MyChart(props) {
       return timeSerie.value
     })
   }
-  const getOptions = (timeSeries) => {
+  const getYAxis = (options) => {
+    return options.yaxis
+  }
+  const getOptions = (timeSeries, options) => {
     return {
+      colors: ['#8fa200'],
       chart: {
-        id: "basic-bar"
+        id: "basic-bar",
+        background: 'rgba(26,39,55,200)',
+      },
+      dataLabels: {
+        enabled: false
       },
       xaxis: {
         categories: getTimeStamps(timeSeries)
+      },
+      yaxis: {
+        min: 0,
+        max: getYAxis(options),
       }
     }
   }
@@ -34,20 +46,23 @@ function MyChart(props) {
   }
   const [chartConfig,
     setChartConfig] = useState({
-    options: getOptions(props.timeSeries),
+    options: getOptions(props.timeSeries, props.options),
     series: getSeries(props.timeSeries)
   })
 
   const [timeSeries,
     setTimeSeries] = useState(props.timeSeries)
 
+  const [options, setOptions] = useState(props.options)
+
   useEffect(() => {
     let mounted = true;
 
     setTimeSeries(() => {
       var newTimeSeries = props.timeSeries
+      var newOptions = props.options
       var newChartConfig = {
-        options: getOptions(newTimeSeries),
+        options: getOptions(newTimeSeries, newOptions),
         series: getSeries(newTimeSeries)
       }    
       setChartConfig(newChartConfig)
@@ -67,8 +82,9 @@ function MyChart(props) {
           <Chart
             options={chartConfig.options}
             series={chartConfig.series}
-            type="line"
-            width="100%"/>
+            type="bar"
+            width="100%"
+            height="300" />
         </div>
       </div>
     </div>
