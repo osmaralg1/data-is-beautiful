@@ -9,6 +9,9 @@ import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
 const useStyles = makeStyles(styles);
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 function RealTime(props, {
   className,
@@ -21,11 +24,11 @@ function RealTime(props, {
     {
       timeStamp: 0,
       value: 0,
-      yaxis: 10,
+
     }, {
       timeStamp: 1,
       value: 1,
-      yaxis: 10,
+
     }
   ]);
 
@@ -39,34 +42,33 @@ function RealTime(props, {
     setInterval(() => {
       setTimeout(() => {
 
-        if (mounted) {
+        if (mounted) { //*********************************************
+
           setTimeSeries((oldSeries) => {
+
             const series = [...oldSeries]
             const newPoint = (series[series.length - 1].value - series[series.length - 2].value) * 5 + series[series.length - 1].value
-            if (series.length > 10){
-              series.shift()
+
+            if (series[series.length - 1].timeStamp > 12){
+                series[series.length - 1] = {
+                  timeStamp: series[series.length - 1].timeStamp,
+                  value: 8e7
+              }
+              return series;
+
             }
-            series.push({
-              timeStamp: series[series.length - 1].timeStamp + 1,
-              value: newPoint
-            })
-            console.log(series)
 
-            setOptions((oldOptions) => {
-              //return {yaxis: 10}
-              if (newPoint > oldOptions.yaxis){
-                return {yaxis: (series[series.length - 1].value - series[series.length - 2].value) * 5 + series[series.length - 1].value}
-              }
-              else{
-                return {yaxis: oldOptions.yaxis}
-              }
+              series.push({
+                timeStamp: series[series.length - 1].timeStamp + 1,
+                value: newPoint
+              })
 
-            })
             return series;
 
           })
 
-        }
+          
+        } //*********************************************************
       }, 1000);
     }, 1000);
 
@@ -93,7 +95,7 @@ function RealTime(props, {
                         )}
                         stepPrecision={0}
                         value={timeSeries[timeSeries.length - 1].value}
-                        formatValue={n => `${n} ` +
+                        formatValue={n => `${numberWithCommas(n)} ` +
                             ''}/></p>
       </CardBody>
     </div>

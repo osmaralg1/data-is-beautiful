@@ -19,19 +19,68 @@ function MyChart(props) {
   const getOptions = (timeSeries, options) => {
     return {
       colors: ['#8fa200'],
+      markers: {
+   colors: ['#F44336', '#E91E63', '#9C27B0']
+},
+      theme: {
+        monochrome: {
+          enabled: true,
+          color: '#8fa200',
+          shadeTo: 'light',
+          shadeIntensity: 0.65
+        }
+      },
+      dataLabels: {
+        style: {
+          colors: ['#FF0000']
+        }
+      },
       chart: {
         id: "basic-bar",
         background: 'rgba(26,39,55,200)',
+        
       },
       dataLabels: {
         enabled: false
       },
       xaxis: {
-        categories: getTimeStamps(timeSeries)
+        categories: getTimeStamps(timeSeries),
+              labels: {
+                show: true,
+                rotate: -45,
+                rotateAlways: false,
+                hideOverlappingLabels: true,
+                showDuplicates: false,
+                trim: false,
+                minHeight: undefined,
+                maxHeight: 120,
+                style: {
+                    colors: ['#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
+                    '#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
+                    '#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'],
+                    fontSize: '12px',
+                    //fontFamily: 'Helvetica, Arial, sans-serif',
+                    fontWeight: 100,
+                    cssClass: 'apexcharts-xaxis-label',}
+          },
       },
       yaxis: {
         min: 0,
-        max: getYAxis(options),
+              labels: {
+          show: true,
+          align: 'right',
+          minWidth: 0,
+          maxWidth: 160,
+          style: {
+              colors: ['#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
+                    '#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'],
+              fontSize: '12px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontWeight: 400,
+              cssClass: 'apexcharts-yaxis-label',
+          },}
+        //max: getYAxis(options),
+
       }
     }
   }
@@ -39,7 +88,7 @@ function MyChart(props) {
   const getSeries = (timeSeries) => {
     return [
       {
-        name: "series-1",
+        name: "Infected people",
         data: getTimeSeriesValue(timeSeries)
       }
     ]
