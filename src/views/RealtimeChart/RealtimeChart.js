@@ -8,12 +8,6 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 const useStyles = makeStyles(styles);
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 function RealTime(props, {
   className,
@@ -24,32 +18,11 @@ function RealTime(props, {
   const [timeSeries,
     setTimeSeries] = useState([
     {
-      timeStamp: 1991,
-      value: 30
+      timeStamp: 0,
+      value: 0
     }, {
-      timeStamp: 1992,
-      value: 40
-    }, {
-      timeStamp: 1993,
-      value: 45
-    }, {
-      timeStamp: 1994,
-      value: 50
-    }, {
-      timeStamp: 1995,
-      value: 51
-    }, {
-      timeStamp: 1996,
-      value: 49
-    }, {
-      timeStamp: 1997,
-      value: 60
-    }, {
-      timeStamp: 1998,
-      value: 70
-    }, {
-      timeStamp: 1999,
-      value: 91
+      timeStamp: 1,
+      value: 1
     }
   ]);
 
@@ -63,10 +36,9 @@ function RealTime(props, {
           setTimeSeries((oldSeries) => {
             const series = [...oldSeries]
 
-            series.shift()
             series.push({
               timeStamp: series[series.length - 1].timeStamp + 1,
-              value: getRandomInt(0, 100)
+              value: (series[series.length - 1].value - series[series.length - 2].value) * 5 + series[series.length - 1].value
             })
             console.log(series)
             return series;
