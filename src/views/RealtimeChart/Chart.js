@@ -20,14 +20,14 @@ function MyChart(props) {
     return {
       colors: ['#8fa200'],
       markers: {
-   colors: ['#F44336', '#E91E63', '#9C27B0']
-},
+      colors: ['#F44336', '#E91E63', '#9C27B0']
+      },
       theme: {
         monochrome: {
           enabled: true,
-          color: '#8fa200',
+          color: props.bar_color,
           shadeTo: 'light',
-          shadeIntensity: 0.65
+          shadeIntensity: 0.8
         }
       },
       dataLabels: {
@@ -133,7 +133,7 @@ function MyChart(props) {
             series={chartConfig.series}
             type="bar"
             width="100%"
-            height="300" />
+            height={props.height} />
         </div>
       </div>
     </div>

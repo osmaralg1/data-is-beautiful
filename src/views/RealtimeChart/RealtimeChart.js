@@ -7,17 +7,21 @@ import {makeStyles} from "@material-ui/core/styles";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
+import { numberWithCommas } from './utils.js';
+import { infection, syntoms, random } from './simulation.js';
+
 const useStyles = makeStyles(styles);
 
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
 
 function RealTime(props, {
   className,
   ...rest
 }) {
-
+  const funcMap = {
+            'infection': infection,
+            'syntoms': syntoms,
+            'random': random,
+        };
   const classes = useStyles();
   const [timeSeries,
     setTimeSeries] = useState([
@@ -45,32 +49,23 @@ function RealTime(props, {
         if (mounted) { //*********************************************
 
           setTimeSeries((oldSeries) => {
+            
+            const method = funcMap[props.function];
 
-            const series = [...oldSeries]
-            const newPoint = (series[series.length - 1].value - series[series.length - 2].value) * 5 + series[series.length - 1].value
-
-            if (series[series.length - 1].timeStamp > 12){
-                series[series.length - 1] = {
-                  timeStamp: series[series.length - 1].timeStamp,
-                  value: 8e7
-              }
-              return series;
-
+            if (typeof method === 'function') {
+              return method([...oldSeries])
             }
-
-              series.push({
-                timeStamp: series[series.length - 1].timeStamp + 1,
-                value: newPoint
-              })
-
-            return series;
+            else{
+              return [...oldSeries]
+            }
+            
 
           })
 
           
         } //*********************************************************
-      }, 1000);
-    }, 1000);
+      }, 100);
+    }, 100);
 
     return () => {
       mounted = false;
@@ -80,23 +75,27 @@ function RealTime(props, {
   return (
     <div>
       <CardHeader color={props.color}>
-        <Chart timeSeries={timeSeries} options={options} />
+        <Chart bar_color={props.bar_color} timeSeries={timeSeries} options={options} height={props.height} />
       </CardHeader>
       <CardBody>
         <h4 className={classes.cardTitle}>{props.title} Day {timeSeries[timeSeries.length - 1].timeStamp}</h4>
-        <p className={classes.cardCategory}> <AnimatedNumber
+        <p className={classes.cardCategory}> 
+
+        <AnimatedNumber
                         style={{
                             transition: '0.8s ease-out',
                             transitionProperty:
                                 'background-color, color'
                         }}
                         frameStyle={perc => (
-                            perc === 100 ? {} : {backgroundColor: '#8fa200'}
+                            perc === 100 ? {} : {backgroundColor: props.bar_color}
                         )}
                         stepPrecision={0}
                         value={timeSeries[timeSeries.length - 1].value}
                         formatValue={n => `${numberWithCommas(n)} ` +
-                            ''}/></p>
+                            ''}/>
+
+        </p>
       </CardBody>
     </div>
 

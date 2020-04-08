@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       <GridItem xs={12} sm={12} md={12}>
           <Card chart>
-              <RealtimeChart color='rgba(26,39,55,200)' title="Infected People" />
+              <RealtimeChart bar_color='#1a97cc' height="300" function="infection" color={"info"} title="Infected People" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -39,41 +39,42 @@ export default function Dashboard() {
             </CardFooter>
           </Card>
         </GridItem>
-      {/** 
+      
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <RealtimeChart color={"success"} title="People with syntoms" />
+            <RealtimeChart bar_color='#037902' height="200" function="syntoms" color={"success"} title="People with syntoms" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                updated 4 minutes ago
+                20 % of infected people will show syntoms
+              </div>
+            </CardFooter>
+          </Card>
+        </GridItem>
+       
+        <GridItem xs={12} sm={12} md={4}>
+          <Card chart>
+            <RealtimeChart bar_color='#c2d232' height="200" function="syntoms" color={"warning"} title="People seriously ill" />
+            <CardFooter chart>
+              <div className={classes.stats}>
+                <AccessTime/>
+                6 % of syntomatic people will become seriously ill
               </div>
             </CardFooter>
           </Card>
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <RealtimeChart color={"warning"} title="People seriously ill" />
+            <RealtimeChart bar_color='#ec4c49' height="200" function="syntoms" color={"danger"} title="Lost lives" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                campaign sent 2 days ago
+                50 % of seriously ill will pass away
               </div>
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card chart>
-            <RealtimeChart color={"danger"} title="Lost lives" />
-            <CardFooter chart>
-              <div className={classes.stats}>
-                <AccessTime/>
-                campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        **/}
+
       </GridContainer>
     </div>
   );
