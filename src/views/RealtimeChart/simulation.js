@@ -34,22 +34,22 @@ function infectionArray(){
 }
 
 export function symptoms(series){
-  return timeSeries(series, 0.2)
+  return timeSeries(series, 0.2, 14)
 }
 
 export function ill(series){
-  return timeSeries(series, 0.2 * 0.06)
+  return timeSeries(series, 0.2 * 0.06, 14 + 14)
 }
 
 export function deads(series){
-  return timeSeries(series, 0.2 * 0.06 * 0.5)
+  return timeSeries(series, 0.2 * 0.06 * 0.5, 14 + 14 + 7*4)
 }
 
-export function timeSeries(series, percentage){
+export function timeSeries(series, percentage, start){
         
-        const start = 11
+        
 
-        if (series[series.length - 1].timeStamp > start){
+        if (series[series.length - 1].timeStamp > start - 1){
           var infected = infectionArray()
           if (series[series.length - 1].timeStamp < start + infected.length){
             const newPoint = infected[series[series.length - 1].timeStamp - start]
