@@ -18,7 +18,7 @@ export function infection(series){
 
 }
 
-export function syntoms(series){
+export function symptoms(series){
 
         var infected = Array(12).fill(0)
         infected[0] = 1;
@@ -29,7 +29,6 @@ export function syntoms(series){
           infected[i] = (infected[i - 1] - infected[i - 2] ) * 5 + infected[i - 1]
         }
         infected[12] = 8e7;
-        console.log(infected)
 
         if (series[series.length - 1].timeStamp > 12){
 

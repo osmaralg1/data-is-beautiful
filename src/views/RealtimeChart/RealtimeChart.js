@@ -8,7 +8,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
 import { numberWithCommas } from './utils.js';
-import { infection, syntoms, random } from './simulation.js';
+import { infection, symptoms, random } from './simulation.js';
 
 const useStyles = makeStyles(styles);
 
@@ -19,7 +19,7 @@ function RealTime(props, {
 }) {
   const funcMap = {
             'infection': infection,
-            'syntoms': syntoms,
+            'symptoms': symptoms,
             'random': random,
         };
   const classes = useStyles();
