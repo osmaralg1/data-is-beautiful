@@ -8,7 +8,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
 import { numberWithCommas } from './utils.js';
-import { infection, syntoms, random } from './simulation.js';
+import { infection, syntoms, random, ill, deads } from './simulation.js';
 
 const useStyles = makeStyles(styles);
 
@@ -21,6 +21,8 @@ function RealTime(props, {
             'infection': infection,
             'syntoms': syntoms,
             'random': random,
+            'ill': ill,
+            'deads': deads,
         };
   const classes = useStyles();
   const [timeSeries,
@@ -64,8 +66,8 @@ function RealTime(props, {
 
           
         } //*********************************************************
-      }, 100);
-    }, 100);
+      }, 1000);
+    }, 1000);
 
     return () => {
       mounted = false;

@@ -19,6 +19,18 @@ export function infection(series){
 }
 
 export function syntoms(series){
+  return timeSeries(series, 0.2)
+}
+
+export function ill(series){
+  return timeSeries(series, 0.2 * 0.06)
+}
+
+export function deads(series){
+  return timeSeries(series, 0.2 * 0.06 * 0.5)
+}
+
+export function timeSeries(series, percentage){
 
         var infected = Array(12).fill(0)
         infected[0] = 1;
@@ -29,15 +41,14 @@ export function syntoms(series){
           infected[i] = (infected[i - 1] - infected[i - 2] ) * 5 + infected[i - 1]
         }
         infected[12] = 8e7;
-        console.log(infected)
 
-        if (series[series.length - 1].timeStamp > 12){
+        if (series[series.length - 1].timeStamp > 13){
 
             if (series[series.length - 1].timeStamp < 24){
-              const newPoint = infected[series[series.length - 1].timeStamp - 13]
+              const newPoint = infected[series[series.length - 1].timeStamp - 12]
               series.push( {
                 timeStamp: series[series.length - 1].timeStamp + 1,
-                value: Math.round(newPoint * 0.2)
+                value: Math.round(newPoint * percentage)
               }) 
             }
 

@@ -54,7 +54,7 @@ export default function Dashboard() {
        
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <RealtimeChart bar_color='#c2d232' height="200" function="syntoms" color={"warning"} title="People seriously ill" />
+            <RealtimeChart bar_color='#c2d232' height="200" function="ill" color={"warning"} title="People seriously ill" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -65,7 +65,7 @@ export default function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <RealtimeChart bar_color='#ec4c49' height="200" function="syntoms" color={"danger"} title="Lost lives" />
+            <RealtimeChart bar_color='#ec4c49' height="200" function="deads" color={"danger"} title="Lost lives" />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
