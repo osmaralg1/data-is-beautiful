@@ -1,25 +1,39 @@
 import { getRandomInt } from './utils.js';
 
-export function infection(series){
 
-        const newPoint = (series[series.length - 1].value - series[series.length - 2].value) * 5 + series[series.length - 1].value
-        if (series[series.length - 1].value >= 8e7){
-            series[series.length - 1] = {
-              timeStamp: series[series.length - 1].timeStamp,
-              value: 8e7
-          }
-          return series;
-        }
-          series.push({
-            timeStamp: series[series.length - 1].timeStamp + 1,
-            value: newPoint
-          })
-        return series;
+export function infection(series){
+  var infected = infectionArray();      
+  const newPoint = infected[series[series.length - 1].timeStamp]
+
+  if (series[series.length - 1].value >= 8e7){
+      series[series.length - 1] = {
+        timeStamp: series[series.length - 1].timeStamp,
+        value: 8e7
+    }
+    return series;
+  }
+  series.push({
+    timeStamp: series[series.length - 1].timeStamp + 1,
+    value: newPoint
+  })
+  return series;
 
 }
 
+function infectionArray(){
 
-export function syntoms(series){
+        var infected = Array(12).fill(0)
+        infected[0] = 1;
+        infected[1] = 6;
+        for (var i=2; i < infected.length; i++){
+          infected[i] = (infected[i - 1] - infected[i - 2] ) * 5 + infected[i - 1]
+        }
+        infected[12] = 8e7;
+        console.log(infected)
+        return infected
+}
+
+export function symptoms(series){
   return timeSeries(series, 0.2)
 }
 
@@ -32,28 +46,19 @@ export function deads(series){
 }
 
 export function timeSeries(series, percentage){
+        
+        const start = 11
 
+        if (series[series.length - 1].timeStamp > start){
+          var infected = infectionArray()
+          if (series[series.length - 1].timeStamp < start + infected.length){
+            const newPoint = infected[series[series.length - 1].timeStamp - start]
 
-        var infected = Array(12).fill(0)
-        infected[0] = 1;
-        infected[1] = 6;
-
-        for (var i=2; i < infected.length; i++){
-
-          infected[i] = (infected[i - 1] - infected[i - 2] ) * 5 + infected[i - 1]
-        }
-        infected[12] = 8e7;
-
-        if (series[series.length - 1].timeStamp > 13){
-
-            if (series[series.length - 1].timeStamp < 24){
-              const newPoint = infected[series[series.length - 1].timeStamp - 12]
-              series.push( {
-                timeStamp: series[series.length - 1].timeStamp + 1,
-                value: Math.round(newPoint * percentage)
-              }) 
-            }
-
+            series.push( {
+              timeStamp: series[series.length - 1].timeStamp + 1,
+              value: Math.round(newPoint * percentage)
+            }) 
+          }
         }
         else{
           series.push({

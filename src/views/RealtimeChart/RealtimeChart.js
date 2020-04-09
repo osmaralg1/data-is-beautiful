@@ -9,7 +9,7 @@ import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
 import { numberWithCommas } from './utils.js';
 
-import { infection, syntoms, random, ill, deads } from './simulation.js';
+import { infection, symptoms, random, ill, deads } from './simulation.js';
 
 
 const useStyles = makeStyles(styles);
@@ -35,10 +35,6 @@ function RealTime(props, {
     {
       timeStamp: 0,
       value: 0,
-
-    }, {
-      timeStamp: 1,
-      value: 1,
 
     }
   ]);
