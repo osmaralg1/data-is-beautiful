@@ -18,6 +18,7 @@ export function infection(series){
 
 }
 
+
 export function syntoms(series){
   return timeSeries(series, 0.2)
 }
@@ -31,6 +32,7 @@ export function deads(series){
 }
 
 export function timeSeries(series, percentage){
+
 
         var infected = Array(12).fill(0)
         infected[0] = 1;

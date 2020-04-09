@@ -4,6 +4,8 @@ import Heart from "@material-ui/icons/Favorite";
 import logo from "./assets/img/logo.svg";
 import favicon from "./assets/img/favicon.png";
 
+import globalTranslations from "./translations/global.json";
+
 const website = "https://www.aachenvalley.de"
 const privacy = "https://www.aachenvalley.de/?page_id=382"
 const configuration = {
@@ -97,7 +99,17 @@ const configuration = {
                 rel="noopener noreferrer">Mehr Informationen</a>
         </div>
     },
-    showNavbarLink: false
+    showNavbarLink: true,
+    languages: [
+        {
+            name: 'English',
+            code: 'en'
+        }, {
+            name: 'Deutsch',
+            code: 'de'
+        }
+    ],
+    globalTranslations: globalTranslations
 
 }
 
