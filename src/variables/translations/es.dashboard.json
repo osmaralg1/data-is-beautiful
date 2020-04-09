@@ -1,0 +1,10 @@
+{
+    "infectionrate": "Tasa de infección: 1 persona infectará en promedio a otras 5 personas.",
+    "symptom": "20% de las personas infectadas mostrarán síntomas",
+    "serious": "6% de las personas sintomáticas se enfermarán gravemente",
+    "death": "50% de los enfermos graves fallecerán",
+    "infected": "Número de infectados",
+    "symptomatic": "Personas con síntomas",
+    "seriouslyill": "Personas que requieren cuidados intensivos",
+    "livelost": "Vidas perdidas "
+  } 

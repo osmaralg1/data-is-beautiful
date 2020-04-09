@@ -45,7 +45,7 @@ function LanguageToggle(props) {
   return (
     <CustomDropdown
           noLiPadding
-          buttonText={<Translate id={props.activeLanguage !== null && props.activeLanguage !== undefined ? props.activeLanguage.code : "en"} />}
+          buttonText={<Translate id={props.activeLanguage !== null && props.activeLanguage !== undefined ? props.activeLanguage.code + ".language" : "en.language"} />}
           buttonProps={{
             className: classes.navLink,
             color: "transparent"
@@ -55,7 +55,7 @@ function LanguageToggle(props) {
 
             <Link onClick={() => {
               props.setActiveLanguage(lang.code)}} className={classes.dropdownLink} key={ lang.code }  >
-              { lang.name }
+              <Translate id={lang.code + ".name"} />
             </Link>
           )}
         />

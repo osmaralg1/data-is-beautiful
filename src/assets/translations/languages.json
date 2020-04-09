@@ -1,5 +1,15 @@
 {
-    "en": "Language",
-    "de": "Sprache",
-    "es": "Idioma"
+    "en": {
+        "language": "Language",
+        "name": "English"
+    },
+
+    "de": {
+        "language": "Sprache",
+        "name": "Deutsch"
+    },
+    "es": {
+        "language": "Idioma",
+        "name": "Español"
+    }
   } 

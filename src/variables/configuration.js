@@ -100,15 +100,7 @@ const configuration = {
         </div>
     },
     showNavbarLink: true,
-    languages: [
-        {
-            name: 'English',
-            code: 'en'
-        }, {
-            name: 'Deutsch',
-            code: 'de'
-        }
-    ],
+    languages: ["en", "de", "es"],
     globalTranslations: globalTranslations
 
 }
