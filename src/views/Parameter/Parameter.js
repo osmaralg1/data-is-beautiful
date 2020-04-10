@@ -35,21 +35,21 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function UserProfile() {
+export default function UserProfile(props) {
   const classes = useStyles();
-  const getTranslations = (activeLanguageCode) => {
+  const [country, setCountry] = React.useState("Germany");
 
-    if (activeLanguageCode === null || activeLanguageCode === undefined) {
-      return;
-    }
-
-    return import (`../../variables/translations/Parameter/${activeLanguageCode}.json`)
+  const setSelectedCountry = (country) => {
+    if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined)
+        props.onSelectedCountry(country)
+    setCountry(country.country)
   }
+
 
   return (
     <div>
 
-      <Localize getTranslations={getTranslations}/>
+      {/* <Localize getTranslations={getTranslations}/> */}
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card profile>
@@ -59,10 +59,16 @@ export default function UserProfile() {
               </a>
             </CardAvatar>
             <CardBody >
-              
-              <CountryDropDown></CountryDropDown>
+            <GridContainer>
+        <GridItem xs={12} sm={6} md={6}>
+              <CountryDropDown onSelectedCountry={(country) => {setSelectedCountry(country)}}></CountryDropDown>
 
-             
+              </GridItem>
+              <GridItem xs={12} sm={6} md={6}>
+              <h3>{country}</h3>
+
+              </GridItem>
+</GridContainer>
             </CardBody>
           </Card>
         </GridItem>

@@ -3,9 +3,9 @@
     "symptom": "20 % of infected people will show symptoms",
     "serious": "6 % of symptomatic people will become seriously ill",
     "death": "50 % of seriously ill will pass away",
-    "infected": "Infected persons",
-    "symptomatic": "Persons with symptoms",
-    "seriouslyill": "Persons required intensive care",
-    "livelost": "Lives lost ",
+    "infected": "Infected persons - Cummulative",
+    "symptomatic": "Infected persons - Daily",
+    "seriouslyill": "Live Lost - Cummulative",
+    "livelost": "Lives Lost - Daily ",
     "day": "Day"
   } 
