@@ -4,11 +4,11 @@ import LanguageToggle from '../LanguageToggle/LanguageToggle';
 
 import {withLocalize} from "react-localize-redux";
 
-function AdminNavbarLinks() {
+function AdminNavbarLinks(props) {
 
   return (
     <div>
-      <LanguageToggle/>
+      <LanguageToggle {...props} />
     </div>
   );
 }

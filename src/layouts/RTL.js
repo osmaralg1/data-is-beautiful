@@ -11,13 +11,13 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
-import routes from "routes.js";
+import routes from "variables/routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/rtlStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
-
+import {configuration} from 'variables/configuration'
 let ps;
 
 const switchRoutes = (
@@ -120,7 +120,7 @@ export default function RTL({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
+        {getRoute() ? <Footer configuration={configuration} /> : null}
         <FixedPlugin
           handleImageClick={handleImageClick}
           handleColorClick={handleColorClick}

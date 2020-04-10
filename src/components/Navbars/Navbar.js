@@ -1,8 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+
+import {Translate } from "react-localize-redux";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,26 +19,43 @@ import Button from "components/CustomButtons/Button.js";
 import {configuration} from 'variables/configuration'
 import styles from "assets/jss/material-dashboard-react/components/headerStyle.js";
 
+import Localize from "components/Localize/Localize.js";
+
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
   const classes = useStyles();
   function makeBrand() {
     var name;
-    props.routes.map(prop => {
-      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
-      }
-      return null;
-    });
-    return name;
+    props
+      .routes
+      .map(prop => {
+        if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
+          name = props.rtlActive
+            ? prop.rtlName
+            : prop.name;
+        }
+        return null;
+      });
+    return <Translate id={name}></Translate>;
   }
-  const { color } = props;
+  const {color} = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
+  const getTranslations = (activeLanguageCode) => {
+
+    if (activeLanguageCode === null || activeLanguageCode === undefined) {
+      return;
+    }
+    
+    return import(`../../variables/translations/routes/${activeLanguageCode}.json`)
+  }
+
   return (
     <AppBar className={classes.appBar + appBarClasses}>
+
+      <Localize getTranslations={getTranslations}/>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
@@ -44,17 +63,19 @@ export default function Header(props) {
             {makeBrand()}
           </Button>
         </div>
-       {configuration.showNavbarLink === true ?
-        <Hidden smDown implementation="css">
-          {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
-        </Hidden> : null } 
+        {configuration.showNavbarLink === true
+          ? <Hidden smDown implementation="css">
+              {props.rtlActive
+                ? <RTLNavbarLinks/>
+                : <AdminNavbarLinks/>}
+            </Hidden>
+          : null}
         <Hidden mdUp implementation="css">
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={props.handleDrawerToggle}
-          >
-            <Menu />
+            onClick={props.handleDrawerToggle}>
+            <Menu/>
           </IconButton>
         </Hidden>
       </Toolbar>

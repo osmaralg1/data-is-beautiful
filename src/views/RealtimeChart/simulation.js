@@ -29,7 +29,6 @@ function infectionArray(){
           infected[i] = (infected[i - 1] - infected[i - 2] ) * 5 + infected[i - 1]
         }
         infected[12] = 8e7;
-        console.log(infected)
         return infected
 }
 

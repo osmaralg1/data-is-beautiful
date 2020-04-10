@@ -23,7 +23,7 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "coronaSimulation",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,

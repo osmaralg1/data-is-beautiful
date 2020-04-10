@@ -10,7 +10,7 @@ import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "routes.js";
+import routes from "variables/routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
@@ -105,7 +105,7 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
+        {getRoute() ? <Footer configuration={configuration} /> : null}
 
       </div>
     </div>

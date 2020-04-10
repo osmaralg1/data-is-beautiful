@@ -3,6 +3,7 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import {Translate } from "react-localize-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -18,6 +19,7 @@ import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 import styles from "assets/jss/material-dashboard-react/components/sidebarStyle.js";
 
 import {configuration} from 'variables/configuration'
+import Localize from "components/Localize/Localize.js";
 
 const useStyles = makeStyles(styles);
 
@@ -70,7 +72,7 @@ export default function Sidebar(props) {
                 />
               )}
               <ListItemText
-                primary={props.rtlActive ? prop.rtlName : prop.name}
+                primary={props.rtlActive ? prop.rtlName : <Translate id={prop.name}></Translate>}
                 className={classNames(classes.itemText, whiteFontClasses, {
                   [classes.itemTextRTL]: props.rtlActive
                 })}
@@ -104,8 +106,18 @@ export default function Sidebar(props) {
       </a>
     </div> 
   );
+  const getTranslations = (activeLanguageCode) => {
+
+    if (activeLanguageCode === null || activeLanguageCode === undefined) {
+      return;
+    }
+    
+    return import(`../../variables/translations/routes/${activeLanguageCode}.json`)
+  }
+
   return (
     <div>
+      <Localize getTranslations={getTranslations}/>
       <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
@@ -124,7 +136,7 @@ export default function Sidebar(props) {
           {brand}
           
           <div className={classes.sidebarWrapper}>
-            {configuration.showNavbarLink === true ?  props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks /> : null}
+            {configuration.showNavbarLink === true ?  props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks whiteColor={true}/> : null}
            
             {links}
           </div>

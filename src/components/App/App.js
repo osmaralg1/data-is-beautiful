@@ -29,6 +29,8 @@ import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 
+import Localize from "components/Localize/Localize.js";
+
 import {configuration} from 'variables/configuration'
 
 const hist = createBrowserHistory();
@@ -40,30 +42,41 @@ class App extends React.Component {
 
         this
             .props
-            .initialize({
-                languages: configuration.languages,
-                translation: configuration.globalTranslations,
-                options: {
+            .initialize({languages: configuration.languages, translation: configuration.globalTranslations, options: {
                     renderToStaticMarkup
-                }
-            });
+                }});
+    }
+
+    getTranslations = (activeLanguageCode) => {
+
+        if (activeLanguageCode === null || activeLanguageCode === undefined) {
+            return;
+        }
+
+        return import ("../../variables/translations/Configuration/" + activeLanguageCode + ".json")
     }
 
     render() {
 
         return (
             <Router history={hist}>
-
+                <Localize getTranslations={this.getTranslations}/>
                 <Helmet>
-                    <title>{configuration.title}</title>
-                    <meta name="description" content={configuration.description}/>
+                    <title>{this
+                            .props
+                            .translate("title")}</title>
+                    <meta
+                        name="description"
+                        content={this
+                        .props
+                        .translate("description")}/>
                     <link rel="icon" type="image/png" href={configuration.favicon} sizes="16x16"/>
                     <link rel="apple-touch-icon" sizes="76x76" href={configuration.appleTouchIcon}/>
                 </Helmet>
 
-                <div style={{marginLeft: 400}}>
-                
-                </div>
+                <div style={{
+                    marginLeft: 400
+                }}></div>
 
                 <Switch>
                     <Route path="/admin" component={Admin}/>
@@ -72,12 +85,28 @@ class App extends React.Component {
                 </Switch>
                 <CookieConsent
                     location="bottom"
-                    buttonText={configuration.cookie.button}
+                    buttonText={this
+                    .props
+                    .translate("cookie.button")}
                     cookieName={configuration.cookie.name}
                     style={configuration.cookie.style}
                     buttonStyle={configuration.cookie.buttonStyle}
-                    expires={150}>
-                    {configuration.cookie.text}
+                    expires={150}
+                    declineButtonText={this
+                        .props
+                        .translate("cookie.declineButton")}
+                    enableDeclineButton
+                    declineButtonStyle={configuration.cookie.buttonStyle}
+                    declineCookieValue={false}
+                    setDeclineCookie={false}
+                    debug={true}
+                    onDecline={() => {
+                        window.open(configuration.privacy)
+                    }}>
+                    {this
+                        .props
+                        .translate("cookie.text")}
+
                 </CookieConsent>
             </Router>
         )

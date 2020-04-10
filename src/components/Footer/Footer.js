@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 // core components
 import styles from "assets/jss/material-dashboard-react/components/footerStyle.js";
-import {configuration} from 'variables/configuration'
+
 
 const useStyles = makeStyles(styles);
 
@@ -23,17 +23,17 @@ export default function Footer(props) {
         <div>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href={configuration.website} target="_blank" className={classes.block}>
-                {configuration.name}
+              <a href={props.configuration.website} target="_blank" className={classes.block}>
+                {props.configuration.name}
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href={configuration.imprint} target="_blank" className={classes.block}>
+              <a href={props.configuration.imprint} target="_blank" className={classes.block}>
                 Impressum
               </a>
             </ListItem>
             <ListItem className={classes.inlineBlock}>
-              <a href={configuration.privacy} target="_blank" className={classes.block}>
+              <a href={props.configuration.privacy} target="_blank" className={classes.block}>
                 Datenschutz
               </a>
             </ListItem>
@@ -45,7 +45,7 @@ export default function Footer(props) {
           </List>
         </div>
         <p >
-          {configuration.slogan}
+          {props.configuration.slogan}
         </p>
       </div>
       <div></div>

@@ -6,5 +6,6 @@
     "infected": "Número de infectados",
     "symptomatic": "Personas con síntomas",
     "seriouslyill": "Personas que requieren cuidados intensivos",
-    "livelost": "Vidas perdidas "
+    "livelost": "Vidas perdidas ",
+    "day": "Día"
   } 

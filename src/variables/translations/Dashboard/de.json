@@ -6,5 +6,6 @@
   "infected": "Anzahl der Infizierten",
   "symptomatic": "Personen mit Symptomen",
   "seriouslyill": "Schwer Erkrankte ",
-  "livelost": "Tod"
+  "livelost": "Tod",
+  "day": "Tag"
 } 

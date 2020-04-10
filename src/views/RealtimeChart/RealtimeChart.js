@@ -67,8 +67,8 @@ function RealTime(props, {
 
           
         } //*********************************************************
-      }, 100);
-    }, 100);
+      }, 2000);
+    }, 2000);
 
     return () => {
       mounted = false;
@@ -81,18 +81,19 @@ function RealTime(props, {
         <Chart bar_color={props.bar_color} timeSeries={timeSeries} options={options} height={props.height} />
       </CardHeader>
       <CardBody>
-        <h4 className={classes.cardTitle}>{props.title} Day {timeSeries[timeSeries.length - 1].timeStamp}</h4>
-        <p className={classes.cardCategory}> 
-
+        <h4 className={classes.cardTitle}>{props.title}</h4>
+        <p className={classes.cardCategory} style={{fontSize: 25}}> 
+        {props.timestampTitle} {" "} {timeSeries[timeSeries.length - 1].timeStamp} {":  "} 
         <AnimatedNumber
                         style={{
                             transition: '0.8s ease-out',
                             transitionProperty:
                                 'background-color, color'
+
                         }}
-                        frameStyle={perc => (
-                            perc === 100 ? {} : {backgroundColor: props.bar_color}
-                        )}
+                        // frameStyle={perc => (
+                        //     perc === 100 ? {} : {backgroundColor: props.bar_color}
+                        // )}
                         stepPrecision={0}
                         value={timeSeries[timeSeries.length - 1].value}
                         formatValue={n => `${numberWithCommas(n)} ` +
