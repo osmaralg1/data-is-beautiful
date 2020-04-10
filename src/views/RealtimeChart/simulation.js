@@ -10,13 +10,13 @@ export function infection(series){
         timeStamp: series[series.length - 1].timeStamp,
         value: 8e7
     }
-    return series;
+    return {series: series, stop: true};
   }
   series.push({
     timeStamp: series[series.length - 1].timeStamp + 1,
     value: newPoint
   })
-  return series;
+  return {series: series, stop: false};
 
 }
 
@@ -46,7 +46,7 @@ export function deads(series){
 
 export function timeSeries(series, percentage, start){
         
-        
+        var stop = false;
 
         if (series[series.length - 1].timeStamp > start - 1){
           var infected = infectionArray()
@@ -58,19 +58,23 @@ export function timeSeries(series, percentage, start){
               value: Math.round(newPoint * percentage)
             }) 
           }
+          else{
+            stop = true
+          }
         }
         else{
           series.push({
             timeStamp: series[series.length - 1].timeStamp + 1,
             value: 0
           })
+
         }
 
 
         if (series.length > 5){
           series.shift()
         }
-        return series;
+        return {series: series, stop: stop};
 
 
 }

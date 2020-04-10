@@ -20,9 +20,6 @@ function RealTime(props, {
   ...rest
 }) {
   const funcMap = {
-       
-
-
             'infection': infection,
             'symptoms': symptoms,
             'random': random,
@@ -42,30 +39,36 @@ function RealTime(props, {
   const [options, setOptions] = useState({
     yaxis: 10
   })
-
+  const [stop, setStop] = useState(false)
   useEffect(() => {
-    let mounted = true;
 
-    setInterval(() => {
+    let mounted = true;
+    
+
+
+
+    let interval =  setInterval(() => {
+
       setTimeout(() => {
 
+        if (stop){
+          return clearInterval(interval)
+        }
         if (mounted) { //*********************************************
 
-          setTimeSeries((oldSeries) => {
-            
+          setTimeSeries((oldSeries) => { 
             const method = funcMap[props.function];
-
             if (typeof method === 'function') {
-              return method([...oldSeries])
+              const result = method([...oldSeries])
+              setStop(result.stop)
+              return result.series
             }
             else{
+              setStop(true)
               return [...oldSeries]
             }
-            
-
           })
-
-          
+           
         } //*********************************************************
       }, 2000);
     }, 2000);
