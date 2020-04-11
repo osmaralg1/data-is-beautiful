@@ -13,7 +13,10 @@ var Enumerable = require('linq');
 const sortedCountries = Enumerable.from(countries).orderBy("$.country").toArray()
 const useStyles = makeStyles(styles);
 
+
 function CountryDropDown(props) {
+
+    const sortedCountries = Enumerable.from(countries).orderBy("$.country").toArray()
 
     const classes = useStyles();
 
@@ -23,7 +26,8 @@ function CountryDropDown(props) {
             return;
         }
 
-        return import (`../../assets/translations/countries/${activeLanguageCode}.json`)
+        // return import (`../../assets/translations/countries/${activeLanguageCode}.json`)
+        return import (`../../assets/translations/countries/en.json`)
     }
 
     const setSelectedCountry = (country) => {

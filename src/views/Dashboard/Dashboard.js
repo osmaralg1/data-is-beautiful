@@ -13,6 +13,8 @@ import Localize from "components/Localize/Localize.js";
 import RealtimeChart from "views/RealtimeChart/RealtimeChart.js";
 import Parameter from "views/Parameter/Parameter.js";
 
+import {withLocalize } from "react-localize-redux";
+
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -27,6 +29,7 @@ function Dashboard(props) {
 
     return import (`../../variables/translations/Dashboard/${activeLanguageCode}.json`)
   }
+  const [country, setCountry] = React.useState("Germany");
 
   const setSelectedCountry = (country) => {
     if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined)
@@ -47,21 +50,20 @@ function Dashboard(props) {
         <GridItem xs={12} sm={6} md={6}>
           <Card chart>
             <RealtimeChart
+              country={country}
               bar_color='#1a97cc'
               height="300"
               function="infection"
               country={country}
               color={"info"}
-              timestampTitle={< Translate id = {
-              `day`
-            } > </Translate>}
+              timestampTitle={props.translate("day")}
               title={< Translate id = {
-              `infected`
+              "infected"
             } > </Translate>}/>
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                <Translate id={`infectionrate`}/>
+                <Translate id={"infectionrate"}/>
               </div>
             </CardFooter>
           </Card>
@@ -111,4 +113,4 @@ function Dashboard(props) {
   );
 }
 
-export default Dashboard;
+export default withLocalize(Dashboard);

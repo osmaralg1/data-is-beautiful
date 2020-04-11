@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {useState} from "react";
+import React from "react";
 import {createBrowserHistory} from "history";
 import {Router, Route, Switch, Redirect} from "react-router-dom";
 import {Helmet} from "react-helmet";
@@ -45,7 +45,7 @@ class App extends React.Component {
 
         this
             .props
-            .initialize({languages: configuration.languages, translation: configuration.globalTranslations, options: {
+            .initialize({languages: configuration.languages, activeLanguage: "en", translation: configuration.globalTranslations, options: {
                     renderToStaticMarkup,
                     onMissingTranslation
                 }});

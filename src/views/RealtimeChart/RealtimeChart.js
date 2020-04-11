@@ -46,7 +46,6 @@ function RealTime(props, {
 
     let mounted = true;
 
-
       let interval = setInterval(() => {
 
         setTimeout(() => {

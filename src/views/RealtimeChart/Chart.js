@@ -13,9 +13,7 @@ function MyChart(props) {
       return timeSerie.value
     })
   }
-  const getYAxis = (options) => {
-    return options.yaxis
-  }
+
   const getOptions = (timeSeries, options) => {
     return {
       colors: ['#8fa200'],
@@ -33,15 +31,13 @@ function MyChart(props) {
       dataLabels: {
         style: {
           colors: ['#FF0000']
-        }
+        },
+        enabled: false
       },
       chart: {
         id: "basic-bar",
         background: 'rgba(26,39,55,200)',
         
-      },
-      dataLabels: {
-        enabled: false
       },
       xaxis: {
         categories: getTimeStamps(timeSeries),
@@ -114,11 +110,8 @@ function MyChart(props) {
   const [timeSeries,
     setTimeSeries] = useState(props.timeSeries)
 
-  const [options, setOptions] = useState(props.options)
-
   useEffect(() => {
-    let mounted = true;
-
+  
     setTimeSeries(() => {
       var newTimeSeries = props.timeSeries
       var newOptions = props.options
@@ -130,9 +123,6 @@ function MyChart(props) {
       return newTimeSeries
     })
 
-    return () => {
-      mounted = false;
-    };
 
   }, [props.timeSeries]);
 
