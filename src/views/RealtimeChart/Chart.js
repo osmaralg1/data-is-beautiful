@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Chart from "react-apexcharts";
-
+import { numberWithCommas } from './utils.js'
 function MyChart(props) {
   const getTimeStamps = (timeSeries) => {
     return timeSeries.map(timeSerie => {
@@ -61,12 +61,15 @@ function MyChart(props) {
                     fontSize: '12px',
                     //fontFamily: 'Helvetica, Arial, sans-serif',
                     fontWeight: 100,
-                    cssClass: 'apexcharts-xaxis-label',}
-          },
+                    cssClass: 'apexcharts-xaxis-label'
+                  },
+                 
+
+              },
       },
       yaxis: {
-        min: 0,
-              labels: {
+        min: 0,    
+        labels: {
           show: true,
           align: 'right',
           minWidth: 0,
@@ -78,7 +81,16 @@ function MyChart(props) {
               fontFamily: 'Helvetica, Arial, sans-serif',
               fontWeight: 400,
               cssClass: 'apexcharts-yaxis-label',
-          },}
+          },
+          formatter: (value) => { 
+            if (value > 1){
+              return numberWithCommas(Math.round(value)) 
+            }
+            else{
+              return Math.round(value * 100) / 100
+            }
+          },
+        }
         //max: getYAxis(options),
 
       }

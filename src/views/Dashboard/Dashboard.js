@@ -33,10 +33,10 @@ function Dashboard(props) {
     <div>
       <Localize getTranslations={getTranslations}/>
       <GridContainer>
-
       <GridItem xs={12} sm={12} md={12}>
           <Card chart>
-              <RealtimeChart bar_color='#1a97cc' height="300" function="infection" color={"info"} timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`infected`}></Translate>} />
+              <RealtimeChart bar_color='#1a97cc' height="300" function="infection" color={"info"}
+               timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`infected`}></Translate>} />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -45,10 +45,10 @@ function Dashboard(props) {
             </CardFooter>
           </Card>
         </GridItem>
-      
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-            <RealtimeChart bar_color='#037902' height="200" function="symptoms" color={"success"} timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`symptomatic`}></Translate>} />
+            <RealtimeChart bar_color='#037902' height="200" function="symptoms" color={"success"}
+             timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`symptomatic`}></Translate>} />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -61,9 +61,8 @@ function Dashboard(props) {
        
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-
-            <RealtimeChart bar_color='#c2d232' height="200" function="ill" color={"warning"} timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`seriouslyill`}></Translate>} />
-
+            <RealtimeChart bar_color='#c2d232' height="200" function="ill" color={"warning"}
+             timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`seriouslyill`}></Translate>} />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
@@ -75,9 +74,8 @@ function Dashboard(props) {
         </GridItem>
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
-
-            <RealtimeChart bar_color='#ec4c49' height="200" function="deads" color={"danger"} timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`livelost`}></Translate>} />
-
+            <RealtimeChart bar_color='#ec4c49' height="200" function="deads" color={"danger"}
+             timestampTitle={<Translate id={`day`}></Translate>} title={<Translate id={`livelost`}></Translate>} />
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
