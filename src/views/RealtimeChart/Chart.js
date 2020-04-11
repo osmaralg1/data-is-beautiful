@@ -16,16 +16,13 @@ function MyChart(props) {
 
   const getOptions = (timeSeries, options) => {
     return {
-      colors: ['#8fa200'],
-      markers: {
-      colors: ['#F44336', '#E91E63', '#9C27B0']
-      },
+
       theme: {
         monochrome: {
           enabled: true,
           color: props.bar_color,
-          shadeTo: 'light',
-          shadeIntensity: 0.8
+          //shadeTo: 'dark',
+          shadeIntensity: 400
         }
       },
       dataLabels: {
@@ -36,7 +33,7 @@ function MyChart(props) {
       },
       chart: {
         id: "basic-bar",
-        background: 'rgba(26,39,55,200)',
+        background: 'rgba(26,39,55,15)',
         
       },
       xaxis: {
@@ -89,6 +86,28 @@ function MyChart(props) {
         }
         //max: getYAxis(options),
 
+      },
+      tooltip: {
+        fillSeriesColor: true,
+        theme: 'dark',
+        custom: function({series, seriesIndex, dataPointIndex, w}) {
+
+          console.log(series)
+          console.log(series, seriesIndex, dataPointIndex, w)
+          return '<div class="container">' +
+
+                    '<span style="margin-left: 5px; margin-top: 13px; height: 15px; width: 15px; background-color:' +
+                    props.bar_color + '; border-radius: 50%; float: left;">' +
+
+                    '</span>' +
+
+          '<div class="row" style="float: left; margin-top: 10px; text-align: center; display:inline-block; min-width: 50px;">' +
+
+                    '<p style="color: #555555;">' +
+                      numberWithCommas(series[seriesIndex][dataPointIndex]) +
+                    '</p>' +
+                  '</div>' + '</div>'
+  }
       }
     }
   }
