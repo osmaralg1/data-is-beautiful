@@ -11,8 +11,6 @@ import corona from "variables/assets/img/corona.jpg";
 
 export default function Parameter(props) {
 
-export default function UserProfile(props) {
-  const classes = useStyles();
   const [country, setCountry] = React.useState("Germany");
 
   const setSelectedCountry = (country) => {

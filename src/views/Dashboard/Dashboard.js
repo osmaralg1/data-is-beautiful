@@ -29,7 +29,6 @@ function Dashboard(props) {
 
     return import (`../../variables/translations/Dashboard/${activeLanguageCode}.json`)
   }
-  const [country, setCountry] = React.useState("Germany");
 
   const setSelectedCountry = (country) => {
     if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined)
