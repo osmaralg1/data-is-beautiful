@@ -20,12 +20,19 @@ export function formatDateOnlyDate(dateString) {
     // + ":" + ms;
 }
 
+export function DateOnlyDate(dateString){
+    if (dateString === null || dateString === undefined) 
+        return null
+    var d = new Date(dateString);
+    return d.getTime()
+}
+
 export function infection(series, country) {
   var countryData = getCountryData(country)
 
         if (series.length < countryData.length - 1) {
             series.push({
-                timeStamp: formatDateOnlyDate(countryData[series.length - 1].lastUpdate),
+                timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
                 value: countryData[series.length - 1].confirmed
             })
             return {series: series, stop: false};
@@ -51,7 +58,7 @@ export function symptoms(series, country) {
 
     if (series.length < countryData.length - 1) {
         series.push({
-            timeStamp: formatDateOnlyDate(countryData[series.length - 1].lastUpdate),
+            timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
             value: countryData[series.length - 1].deltaConfirmed
         })
         return {series: series, stop: false};
@@ -65,7 +72,7 @@ export function ill(series, country) {
 
         if (series.length < countryData.length - 1) {
             series.push({
-                timeStamp: formatDateOnlyDate(countryData[series.length - 1].lastUpdate),
+                timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
                 value: countryData[series.length - 1].deaths
             })
             return {series: series, stop: false};
@@ -78,7 +85,7 @@ export function deads(series, country) {
 
         if (series.length < countryData.length - 1) {
             series.push({
-                timeStamp: formatDateOnlyDate(countryData[series.length - 1].lastUpdate),
+                timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
                 value: series.length < 2 ? countryData[series.length - 1].deaths: countryData[series.length - 1].deaths - countryData[series.length - 2].deaths
             })
             return {series: series, stop: false};

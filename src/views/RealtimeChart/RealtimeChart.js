@@ -13,7 +13,7 @@ import {usePrevious} from "utils/misc";
 
 // import { infection, symptoms, random, ill, deads } from './simulation.js';
 
-import {infection, symptoms, random, ill, deads} from './simulationWithRealData.js';
+import {infection, symptoms, random, ill, deads, formatDateOnlyDate} from './simulationWithRealData.js';
 
 const useStyles = makeStyles(styles);
 
@@ -102,7 +102,7 @@ function RealTime(props, {
         }}>
           {props.timestampTitle}
           {" "}
-          {timeSeries[timeSeries.length - 1].timeStamp}
+          {formatDateOnlyDate(timeSeries[timeSeries.length - 1].timeStamp)}
           {":  "}
           <AnimatedNumber style={{
             transition: '0.8s ease-out',

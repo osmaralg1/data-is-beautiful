@@ -9,8 +9,9 @@ function MyChart(props) {
   }
 
   const getTimeSeriesValue = (timeSeries) => {
+    console.log(timeSeries)
     return timeSeries.map(timeSerie => {
-      return timeSerie.value
+      return {y: timeSerie.value, x: timeSerie.timeStamp}
     })
   }
 
@@ -37,28 +38,27 @@ function MyChart(props) {
         
       },
       xaxis: {
-        categories: getTimeStamps(timeSeries),
-              labels: {
-                show: true,
-                rotate: -45,
-                rotateAlways: false,
-                hideOverlappingLabels: true,
-                showDuplicates: false,
-                trim: false,
-                minHeight: undefined,
-                maxHeight: 120,
-                style: {
-                    colors: ['#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
-                    '#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff',
-                    '#ffffff', '#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'],
-                    fontSize: '12px',
-                    //fontFamily: 'Helvetica, Arial, sans-serif',
-                    fontWeight: 100,
-                    cssClass: 'apexcharts-xaxis-label'
-                  },
-                 
+        type: "datetime",   
+        min: 1580083200000, // here first day of country x
+        labels: {
+          show: true,
+          rotate: 0,
+          rotateAlways: false,
+          hideOverlappingLabels: true,
+          showDuplicates: false,
+          trim: false,
+          minHeight: undefined,
+          maxHeight: 120,
+          style: {
+              colors: '#ffffff',
+              fontSize: '12px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontWeight: 400,
+              cssClass: 'apexcharts-xaxis-label',
+          },
+        }
+        //categories: getTimeStamps(timeSeries),
 
-              },
       },
       yaxis: {
         min: 0,    
