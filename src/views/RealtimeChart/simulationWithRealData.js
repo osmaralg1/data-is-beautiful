@@ -21,11 +21,7 @@ export function formatDateOnlyDate(dateString) {
 }
 
 export function infection(series, country) {
-    var countryData = Enumerable
-        .from(data)
-        .where("$.country==='" + country + "'")
-        .orderBy("$.lastUpdate")
-        .toArray()
+  var countryData = getCountryData(country)
 
         if (series.length < countryData.length - 1) {
             series.push({
@@ -51,11 +47,7 @@ function infectionArray() {
 }
 
 export function symptoms(series, country) {
-    var countryData = Enumerable
-        .from(data)
-        .where("$.country==='" + country + "'")
-        .orderBy("$.lastUpdate")
-        .toArray()
+  var countryData = getCountryData(country)
 
     if (series.length < countryData.length - 1) {
         series.push({
@@ -69,11 +61,7 @@ export function symptoms(series, country) {
 }
 
 export function ill(series, country) {
-    var countryData = Enumerable
-        .from(data)
-        .where("$.country==='" + country + "'")
-        .orderBy("$.lastUpdate")
-        .toArray()
+    var countryData = getCountryData(country)
 
         if (series.length < countryData.length - 1) {
             series.push({
@@ -86,11 +74,7 @@ export function ill(series, country) {
 }
 
 export function deads(series, country) {
-    var countryData = Enumerable
-        .from(data)
-        .where("$.country==='" + country + "'")
-        .orderBy("$.lastUpdate")
-        .toArray()
+  var countryData = getCountryData(country)
 
         if (series.length < countryData.length - 1) {
             series.push({
@@ -130,11 +114,9 @@ export function timeSeries(series, percentage, start) {
         series.shift()
     }
     return {series: series, stop: stop};
-
 }
 
 export function random(series) {
-
     const newPoint = getRandomInt(0, 100)
     series.shift()
     series.push({
@@ -143,4 +125,32 @@ export function random(series) {
     })
     return series;
 
+}
+
+export function getCountryData(country) {
+  var countryData = Enumerable
+        .from(data)
+        .where("$.country==='" + country + "'")
+        .orderBy("$.lastUpdate")
+        .toArray()
+var startRecording = false
+ var dataWithNumber = []
+ countryData.map(data => {
+      if (! startRecording) {
+        if (data.confirmed > 0) {
+          startRecording = true
+          return dataWithNumber.push(data)
+        }
+      } else {
+        return  dataWithNumber.push(data)
+      }
+      
+
+
+      
+    })
+
+    console.log(dataWithNumber)
+  
+        return dataWithNumber
 }

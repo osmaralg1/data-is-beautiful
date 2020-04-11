@@ -33,8 +33,7 @@ function Localize(props) {
   
   useEffect(() => {
     let hasActiveLanguageChanged = true
-    console.log(prevProps)
-    console.log(props)
+
     if (prevProps !== null && prevProps !== undefined && prevProps.activeLanguage !== null &&
       prevProps.activeLanguage !== undefined && props.activeLanguage !== null && props.activeLanguage !== undefined)
       hasActiveLanguageChanged = prevProps.activeLanguage.code !== props.activeLanguage.code
