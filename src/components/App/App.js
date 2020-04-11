@@ -35,6 +35,9 @@ import {configuration} from 'variables/configuration'
 
 const hist = createBrowserHistory();
 
+const onMissingTranslation = ({ defaultTranslation }) => null;
+
+
 class App extends React.Component {
 
     constructor(props) {
@@ -43,7 +46,8 @@ class App extends React.Component {
         this
             .props
             .initialize({languages: configuration.languages, translation: configuration.globalTranslations, options: {
-                    renderToStaticMarkup
+                    renderToStaticMarkup,
+                    onMissingTranslation
                 }});
     }
 

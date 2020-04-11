@@ -1,0 +1,17 @@
+{
+  "chooseCountry": "Land auswählen",
+  "country": {
+    "germany": {
+      "name": "Deutschland",
+      "code": "de"
+    },
+    "uk": {
+      "name": "England",
+      "code": "uk"
+    },
+    "usa": {
+      "name": "USA",
+      "code": "us"
+    }
+  }
+}

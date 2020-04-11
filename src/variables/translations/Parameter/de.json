@@ -1,0 +1,11 @@
+{
+  "infectionrate": "Infektionsrate: 1 Person wird durschnittlich 5 Personen anstecken.",
+  "symptom": "20% der Infizierten zeigen Symptome",
+  "serious": "6% der symptomatischen Menschen werden schwer krank",
+  "death": "50% der Schwerkranken sterben",
+  "infected": "Anzahl der Infizierten",
+  "symptomatic": "Personen mit Symptomen",
+  "seriouslyill": "Schwer Erkrankte ",
+  "livelost": "Tod",
+  "day": "Tag"
+} 

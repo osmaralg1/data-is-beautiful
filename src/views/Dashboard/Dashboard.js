@@ -1,9 +1,9 @@
-import React  from "react";
+import React from "react";
 // @material-ui/core
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 import AccessTime from "@material-ui/icons/AccessTime";
-import {Translate } from "react-localize-redux";
+import {Translate} from "react-localize-redux";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -11,12 +11,11 @@ import Card from "components/Card/Card.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Localize from "components/Localize/Localize.js";
 import RealtimeChart from "views/RealtimeChart/RealtimeChart.js";
-
+import Parameter from "views/Parameter/Parameter.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
 const useStyles = makeStyles(styles);
-
 
 function Dashboard(props) {
   const getTranslations = (activeLanguageCode) => {
@@ -24,8 +23,8 @@ function Dashboard(props) {
     if (activeLanguageCode === null || activeLanguageCode === undefined) {
       return;
     }
-    
-    return import(`../../variables/translations/Dashboard/${activeLanguageCode}.json`)
+
+    return import (`../../variables/translations/Dashboard/${activeLanguageCode}.json`)
   }
 
   const classes = useStyles();
@@ -40,7 +39,7 @@ function Dashboard(props) {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                <Translate id={`infectionrate`} />
+                <Translate id={`infectionrate`}/>
               </div>
             </CardFooter>
           </Card>
@@ -52,13 +51,13 @@ function Dashboard(props) {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                <Translate id={`symptom`} />
-                
+                <Translate id={`symptom`}/>
+
               </div>
             </CardFooter>
           </Card>
         </GridItem>
-       
+
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <RealtimeChart bar_color='#c2d232' height="200" function="ill" color={"warning"}
@@ -66,8 +65,8 @@ function Dashboard(props) {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                <Translate id={`serious`} />
-                
+                <Translate id={`serious`}/>
+
               </div>
             </CardFooter>
           </Card>
@@ -79,7 +78,7 @@ function Dashboard(props) {
             <CardFooter chart>
               <div className={classes.stats}>
                 <AccessTime/>
-                <Translate id={`death`} />
+                <Translate id={`death`}/>
               </div>
             </CardFooter>
           </Card>

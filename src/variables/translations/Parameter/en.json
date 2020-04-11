@@ -1,0 +1,11 @@
+{
+    "infectionrate": "Infection rate: 1 person will infect in average 5 other persons.",
+    "symptom": "20 % of infected people will show symptoms",
+    "serious": "6 % of symptomatic people will become seriously ill",
+    "death": "50 % of seriously ill will pass away",
+    "infected": "Infected persons",
+    "symptomatic": "Persons with symptoms",
+    "seriouslyill": "Persons required intensive care",
+    "livelost": "Lives lost ",
+    "day": "Day"
+  } 
