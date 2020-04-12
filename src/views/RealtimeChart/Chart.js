@@ -9,7 +9,6 @@ function MyChart(props) {
   }
 
   const getTimeSeriesValue = (timeSeries) => {
-    console.log(timeSeries)
     return timeSeries.map(timeSerie => {
       return {y: timeSerie.value, x: timeSerie.timeStamp}
     })
@@ -39,7 +38,7 @@ function MyChart(props) {
       },
       xaxis: {
         type: "datetime",   
-        min: 1580083200000, // here first day of country x
+        // min: 1580083200000, // here first day of country x
         labels: {
           show: true,
           rotate: 0,
@@ -92,8 +91,6 @@ function MyChart(props) {
         theme: 'dark',
         custom: function({series, seriesIndex, dataPointIndex, w}) {
 
-          console.log(series)
-          console.log(series, seriesIndex, dataPointIndex, w)
           return '<div class="container">' +
 
                     '<span style="margin-left: 5px; margin-top: 13px; height: 15px; width: 15px; background-color:' +

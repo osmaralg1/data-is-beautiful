@@ -31,61 +31,68 @@ function RealTime(props, {
   const classes = useStyles();
   const [timeSeries,
     setTimeSeries] = useState([
-    {
-      timeStamp: 0,
-      value: 0
-    }
   ]);
 
   const options = {yaxis: 10}
   const [stop,
     setStop] = useState(false)
 
+
   const prevProps = usePrevious(props)
   useEffect(() => {
 
     let mounted = true;
 
-      let interval = setInterval(() => {
+      if (stop === true ) {
+        if (prevProps !== null && prevProps !== undefined) {
+          if (prevProps.country !== props.country || prevProps.restart !== props.restart || prevProps.start !== props.start) {
+             
+             setStop(false)
+           }
+         }
+      } else {
+        let interval = setInterval(() => {
 
-        setTimeout(() => {
-  
-          if (stop) {
-            return clearInterval(interval)
-          }
-          if (mounted) { //*********************************************
-  
-            setTimeSeries((oldSeries) => {
-              if (prevProps !== null && prevProps !== undefined && prevProps.country !== props.country) {
-                oldSeries = [
-                  {
-                    timeStamp: 0,
-                    value: 0
+          setTimeout(() => {
+    
+            if (stop) {
+              return clearInterval(interval)
+            }
+            if (mounted) { //*********************************************
+    
+              setTimeSeries((oldSeries) => {
+                if (prevProps !== null && prevProps !== undefined) {
+                 if (prevProps.country !== props.country || prevProps.restart !== props.restart) {
+                    oldSeries = [
+                    ]
+                  } else if (prevProps.pause !== props.pause ) {
+                    setStop(true)
+                    return [...oldSeries]
                   }
-                ]
-              }
-              const method = funcMap[props.function];
-              if (typeof method === 'function') {
-                const result = method([...oldSeries], props.country)
-                setStop(result.stop)
-                return result.series
-              } else {
-                setStop(true)
-                return [...oldSeries]
-              }
-            })
+                }
+                const method = funcMap[props.function];
+                if (typeof method === 'function') {
+                  const result = method([...oldSeries], props.country)
+                  setStop(result.stop)
+                  return result.series
+                } else {
+                  setStop(true)
+                  return [...oldSeries]
+                }
+              })
+    
+            } //*********************************************************
+          }, 100);
+        }, 100);
+    
   
-          } //*********************************************************
-        }, 500);
-      }, 500);
-
-     
-
+      }
+      
     return () => {
       mounted = false;
     };
-  }, [timeSeries, props.country]);
-
+  }, [timeSeries, props.country, props.restart, props.pause, props.start]);
+ 
   return (
     <div>
       <CardHeader color={props.color}>
@@ -98,18 +105,20 @@ function RealTime(props, {
       <CardBody>
         <h4 className={classes.cardTitle}>{props.title}</h4>
         <p className={classes.cardCategory} style={{
-          fontSize: 25
+          fontSize: 20
         }}>
           {props.timestampTitle}
           {" "}
-          {formatDateOnlyDate(timeSeries[timeSeries.length - 1].timeStamp)}
+          {timeSeries.length > 0 ? formatDateOnlyDate(timeSeries[timeSeries.length - 1].timeStamp)  : ""}
           {":  "}
           <AnimatedNumber style={{
             transition: '0.8s ease-out',
-            transitionProperty: 'background-color, color'
+            transitionProperty: 'background-color, color',
+            fontSize: 25,
+            fontWeight: 600
           }} // frameStyle={perc => (} //     perc === 100 ? {} : {backgroundColor: props.bar_color}
             // )}
-            stepPrecision={0} value={timeSeries[timeSeries.length - 1].value} formatValue={n => `${numberWithCommas(n)} `}/>
+            stepPrecision={0} value={timeSeries.length > 0 ? timeSeries[timeSeries.length - 1].value : ""} formatValue={n => `${numberWithCommas(n)} `}/>
 
         </p>
       </CardBody>

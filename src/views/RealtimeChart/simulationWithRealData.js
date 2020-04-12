@@ -20,7 +20,7 @@ export function formatDateOnlyDate(dateString) {
     // + ":" + ms;
 }
 
-export function DateOnlyDate(dateString){
+export function DateOnlyDate(dateString) {
     if (dateString === null || dateString === undefined) 
         return null
     var d = new Date(dateString);
@@ -28,16 +28,7 @@ export function DateOnlyDate(dateString){
 }
 
 export function infection(series, country) {
-  var countryData = getCountryData(country)
-
-        if (series.length < countryData.length - 1) {
-            series.push({
-                timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
-                value: countryData[series.length - 1].confirmed
-            })
-            return {series: series, stop: false};
-        } else 
-            return {series: series, stop: true}
+    return getCountryData(series, country, "confirmed")
 
 }
 
@@ -54,43 +45,16 @@ function infectionArray() {
 }
 
 export function symptoms(series, country) {
-  var countryData = getCountryData(country)
+    return getCountryData(series, country, "deltaConfirmed")
 
-    if (series.length < countryData.length - 1) {
-        series.push({
-            timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
-            value: countryData[series.length - 1].deltaConfirmed
-        })
-        return {series: series, stop: false};
-    } else 
-        return {series: series, stop: true}
-    
 }
 
 export function ill(series, country) {
-    var countryData = getCountryData(country)
-
-        if (series.length < countryData.length - 1) {
-            series.push({
-                timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
-                value: countryData[series.length - 1].deaths
-            })
-            return {series: series, stop: false};
-        } else 
-            return {series: series, stop: true}
+    return getCountryData(series, country, "deaths")
 }
 
 export function deads(series, country) {
-  var countryData = getCountryData(country)
-
-        if (series.length < countryData.length - 1) {
-            series.push({
-                timeStamp: DateOnlyDate(countryData[series.length - 1].lastUpdate),
-                value: series.length < 2 ? countryData[series.length - 1].deaths: countryData[series.length - 1].deaths - countryData[series.length - 2].deaths
-            })
-            return {series: series, stop: false};
-        } else 
-            return {series: series, stop: true}
+    return getCountryData(series, country, "deaths", true)
 }
 
 export function timeSeries(series, percentage, start) {
@@ -134,30 +98,36 @@ export function random(series) {
 
 }
 
-export function getCountryData(country) {
-  var countryData = Enumerable
+export function getCountryData(series, country, propName, comparetoLast) {
+    var countryData = Enumerable
         .from(data)
         .where("$.country==='" + country + "'")
         .orderBy("$.lastUpdate")
         .toArray()
-var startRecording = false
- var dataWithNumber = []
- countryData.map(data => {
-      if (! startRecording) {
-        if (data.confirmed > 0) {
-          startRecording = true
-          return dataWithNumber.push(data)
+    var startRecording = false
+    var dataWithNumber = []
+    countryData.map(data => {
+        if (!startRecording) {
+            if (data.confirmed > 0) {
+                startRecording = true
+                return dataWithNumber.push(data)
+            }
+        } else {
+            return dataWithNumber.push(data)
         }
-      } else {
-        return  dataWithNumber.push(data)
-      }
-      
-
-
-      
     })
 
-    console.log(dataWithNumber)
-  
-        return dataWithNumber
+    if (series.length < dataWithNumber.length) {
+        series.push({
+            timeStamp: DateOnlyDate(dataWithNumber[series.length].lastUpdate),
+            value: comparetoLast === true
+                ? series.length < 2
+                    ? dataWithNumber[series.length][propName]
+                    : dataWithNumber[series.length][propName] - dataWithNumber[series.length - 1][propName]: dataWithNumber[series.length][propName]
+        })
+        return {series: series, stop: false};
+    } else {
+        return {series: series, stop: true}
+    }
+
 }
