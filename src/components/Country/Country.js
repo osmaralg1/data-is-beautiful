@@ -10,7 +10,7 @@ import Localize from "components/Localize/Localize.js";
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 import countries from "assets/misc/countries.json";
 var Enumerable = require('linq');
-const sortedCountries = Enumerable.from(countries).orderBy("$.country").toArray()
+
 const useStyles = makeStyles(styles);
 
 

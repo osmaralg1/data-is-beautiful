@@ -102,7 +102,6 @@ function Dashboard(props) {
               bar_color='#1a97cc'
               height="300"
               function="infection"
-              country={country}
               color={"info"}
               timestampTitle={props.translate("day")}
               title={< Translate id = {

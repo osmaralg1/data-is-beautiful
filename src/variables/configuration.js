@@ -3,10 +3,11 @@ import React from "react";
 import Heart from "@material-ui/icons/Favorite";
 import logo from "./assets/img/logo.svg";
 import favicon from "./assets/img/favicon.png";
-
 import globalTranslations from "./translations/global.json";
+
 const website = "https://www.aachenvalley.de"
 const privacy = "https://www.aachenvalley.de/?page_id=382"
+
 
 const configuration = {
     name: "Aachen Valley",
@@ -100,7 +101,6 @@ const configuration = {
     showNavbarLink: true,
     languages: ["en", "de", "es"],
     globalTranslations: globalTranslations
-
 }
 
 export {configuration};

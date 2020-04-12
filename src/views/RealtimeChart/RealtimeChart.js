@@ -7,13 +7,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
-import {numberWithCommas} from './utils.js';
 
-import {usePrevious} from "utils/misc";
+import {usePrevious, numberWithCommas} from "utils/misc";
 
-// import { infection, symptoms, random, ill, deads } from './simulation.js';
-
-import {infection, symptoms, random, ill, deads, formatDateOnlyDate} from './simulationWithRealData.js';
+import {infection, symptoms, random, ill, deads, formatDateOnlyDate} from 'variables/simulation/simulationRealData.js';
 
 const useStyles = makeStyles(styles);
 

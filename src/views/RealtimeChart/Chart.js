@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Chart from "react-apexcharts";
-import { numberWithCommas } from './utils.js'
+import { numberWithCommas } from 'utils/misc.js'
+
 function MyChart(props) {
-  const getTimeStamps = (timeSeries) => {
-    return timeSeries.map(timeSerie => {
-      return timeSerie.timeStamp
-    })
-  }
+
 
   const getTimeSeriesValue = (timeSeries) => {
     return timeSeries.map(timeSerie => {
@@ -103,7 +100,7 @@ function MyChart(props) {
                     '<p style="color: #555555;">' +
                       numberWithCommas(series[seriesIndex][dataPointIndex]) +
                     '</p>' +
-                  '</div>' + '</div>'
+                  '</div> </div>'
   }
       }
     }

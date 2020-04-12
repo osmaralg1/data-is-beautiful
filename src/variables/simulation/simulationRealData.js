@@ -1,5 +1,6 @@
-import {getRandomInt} from './utils.js';
-import data from "../../variables/assets/data.json";
+import {getRandomInt} from 'utils/misc.js';
+
+import data from "../assets/data.json";
 var Enumerable = require('linq');
 function addZero(x, n) {
     while (x.toString().length < n) {
@@ -98,7 +99,7 @@ export function random(series) {
 
 }
 
-export function getCountryData(series, country, propName, comparetoLast) {
+export function getData(country) {
     var countryData = Enumerable
         .from(data)
         .where("$.country==='" + country + "'")
@@ -112,10 +113,18 @@ export function getCountryData(series, country, propName, comparetoLast) {
                 startRecording = true
                 return dataWithNumber.push(data)
             }
+            return null
         } else {
             return dataWithNumber.push(data)
         }
     })
+
+    return dataWithNumber
+}
+
+
+export function getCountryData(series, country, propName, comparetoLast) {
+    var dataWithNumber = getData(country)
 
     if (series.length < dataWithNumber.length) {
         series.push({

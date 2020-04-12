@@ -13,39 +13,17 @@ import CardIcon from "components/Card/CardIcon.js";
 import CardHeader from "components/Card/CardHeader.js";
 
 
-import simulationData from "../../variables/assets/data.json";
-var Enumerable = require('linq');
-
+import {getData} from "variables/simulation/simulationRealData";
+import {usePrevious} from "utils/misc";
 const useStyles = makeStyles(styles);
 
-function getData (props) {
-    var countryData = Enumerable
-        .from(simulationData)
-        .where("$.country==='" + props.country + "'")
-        .orderBy("$.lastUpdate")
-        .toArray()
-    var startRecording = false
-    var dataWithNumber = []
-    countryData.map(data => {
-        if (!startRecording) {
-            if (data.confirmed > 0) {
-                startRecording = true
-                return dataWithNumber.push(data)
-            }
-        } else {
-            return dataWithNumber.push(data)
-        }
-    })
-    
-    return dataWithNumber
 
-}
 export default function TableView(props) {
     const classes = useStyles();
   
 
 
-    const [data, setData] = React.useState(getData(props));
+    const [data, setData] = React.useState(getData(props.country));
     const [totalPages, setTotalPages] = React.useState(0);
     const [totalElements, setTotalElements] = React.useState(0);
     const [lastPage, setLastPage] = React.useState(true);
@@ -57,8 +35,7 @@ export default function TableView(props) {
     const [filter, setFilter] = React.useState(props.filter);
 
     const [sorting, setSorting] = React.useState(props.sorting);
-    const [country,
-        setCountry] = React.useState(props.country);
+    const prevProps = usePrevious(props)
     React.useEffect(() => {
       if ((data === null || data === undefined) && props.doNotFetch !== true) {
         browseData(paging, filter, sorting)
@@ -75,8 +52,8 @@ export default function TableView(props) {
 
       }
 
-      if (country !== props.country) {
-          setData(getData(props))
+      if (prevProps !== null && prevProps !== undefined && prevProps.country !== props.country) {
+          setData(getData(props.country))
       }
       
     }, [data, props.country])
