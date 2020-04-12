@@ -5,6 +5,7 @@ import { numberWithCommas } from 'utils/misc.js'
 function MyChart(props) {
 
 
+
   const getTimeSeriesValue = (timeSeries) => {
     return timeSeries.map(timeSerie => {
       return {y: timeSerie.value, x: timeSerie.timeStamp}

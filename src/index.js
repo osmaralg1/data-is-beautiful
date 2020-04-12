@@ -20,11 +20,17 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { LocalizeProvider, localizeReducer } from 'react-localize-redux';
+import { setGlobal } from 'reactn';
 
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
+import data from "variables/assets/data.json";
 
 import App from 'components/App/App'
+
+setGlobal({
+  data: data
+});
 
 const getReduxStore = () => {
   return createStore(combineReducers({ 

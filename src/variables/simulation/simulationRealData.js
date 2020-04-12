@@ -1,6 +1,5 @@
 import {getRandomInt} from 'utils/misc.js';
 
-import data from "../assets/data.json";
 var Enumerable = require('linq');
 function addZero(x, n) {
     while (x.toString().length < n) {
@@ -28,8 +27,8 @@ export function DateOnlyDate(dateString) {
     return d.getTime()
 }
 
-export function infection(series, country) {
-    return getCountryData(series, country, "confirmed")
+export function infection(data, series, country) {
+    return getCountryData(data, series, country, "confirmed")
 
 }
 
@@ -45,17 +44,17 @@ function infectionArray() {
     return infected
 }
 
-export function symptoms(series, country) {
-    return getCountryData(series, country, "deltaConfirmed")
+export function symptoms(data, series, country) {
+    return getCountryData(data, series, country, "deltaConfirmed")
 
 }
 
-export function ill(series, country) {
-    return getCountryData(series, country, "deaths")
+export function ill(data, series, country) {
+    return getCountryData(data, series, country, "deaths")
 }
 
-export function deads(series, country) {
-    return getCountryData(series, country, "deaths", true)
+export function deads(data, series, country) {
+    return getCountryData(data,series, country, "deaths", true)
 }
 
 export function timeSeries(series, percentage, start) {
@@ -99,7 +98,7 @@ export function random(series) {
 
 }
 
-export function getData(country) {
+export function getData(data, country) {
     var countryData = Enumerable
         .from(data)
         .where("$.country==='" + country + "'")
@@ -118,13 +117,14 @@ export function getData(country) {
             return dataWithNumber.push(data)
         }
     })
+    countryData.length = 0
 
     return dataWithNumber
 }
 
 
-export function getCountryData(series, country, propName, comparetoLast) {
-    var dataWithNumber = getData(country)
+export function getCountryData(data, series, country, propName, comparetoLast) {
+    var dataWithNumber = getData(data, country)
 
     if (series.length < dataWithNumber.length) {
         series.push({
@@ -134,6 +134,7 @@ export function getCountryData(series, country, propName, comparetoLast) {
                     ? dataWithNumber[series.length][propName]
                     : dataWithNumber[series.length][propName] - dataWithNumber[series.length - 1][propName]: dataWithNumber[series.length][propName]
         })
+        dataWithNumber.length = 0
         return {series: series, stop: false};
     } else {
         return {series: series, stop: true}

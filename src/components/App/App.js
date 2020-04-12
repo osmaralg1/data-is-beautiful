@@ -45,7 +45,7 @@ class App extends React.Component {
 
         this
             .props
-            .initialize({languages: configuration.languages, activeLanguage: "en", translation: configuration.globalTranslations, options: {
+            .initialize({languages: configuration.languages, translation: configuration.globalTranslations, options: {
                     renderToStaticMarkup,
                     onMissingTranslation
                 }});

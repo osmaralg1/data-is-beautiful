@@ -11,6 +11,7 @@ import AnimatedNumber from 'react-animated-number';
 import {usePrevious, numberWithCommas} from "utils/misc";
 
 import {infection, symptoms, random, ill, deads, formatDateOnlyDate} from 'variables/simulation/simulationRealData.js';
+import { useGlobal } from 'reactn';
 
 const useStyles = makeStyles(styles);
 
@@ -29,6 +30,8 @@ function RealTime(props, {
   const [timeSeries,
     setTimeSeries] = useState([
   ]);
+  const [data,
+    setData] = useGlobal('data');
 
   const options = {yaxis: 10}
   const [stop,
@@ -69,7 +72,7 @@ function RealTime(props, {
                 }
                 const method = funcMap[props.function];
                 if (typeof method === 'function') {
-                  const result = method([...oldSeries], props.country)
+                  const result = method(data, [...oldSeries], props.country)
                   setStop(result.stop)
                   return result.series
                 } else {

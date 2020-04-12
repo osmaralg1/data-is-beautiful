@@ -12,6 +12,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardHeader from "components/Card/CardHeader.js";
 
+import { useGlobal } from 'reactn';
 
 import {getData} from "variables/simulation/simulationRealData";
 import {usePrevious} from "utils/misc";
@@ -21,9 +22,10 @@ const useStyles = makeStyles(styles);
 export default function TableView(props) {
     const classes = useStyles();
   
+    const [originalData,
+      setOriginalData] = useGlobal('data');
 
-
-    const [data, setData] = React.useState(getData(props.country));
+    const [data, setData] = React.useState(getData(originalData, props.country));
     const [totalPages, setTotalPages] = React.useState(0);
     const [totalElements, setTotalElements] = React.useState(0);
     const [lastPage, setLastPage] = React.useState(true);
@@ -53,7 +55,7 @@ export default function TableView(props) {
       }
 
       if (prevProps !== null && prevProps !== undefined && prevProps.country !== props.country) {
-          setData(getData(props.country))
+          setData(getData(originalData, props.country))
       }
       
     }, [data, props.country])
