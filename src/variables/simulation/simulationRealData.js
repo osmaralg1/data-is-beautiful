@@ -1,13 +1,9 @@
 import {getRandomInt} from 'utils/misc.js';
+import {DateOnlyDate} from 'utils/date.js';
+
 import data from "variables/assets/data.json";
 
 var Enumerable = require('linq');
-function addZero(x, n) {
-    while (x.toString().length < n) {
-        x = "0" + x;
-    }
-    return x;
-}
 
 
 export function formatDateOnlyDate(dateString) {
@@ -17,20 +13,13 @@ export function formatDateOnlyDate(dateString) {
     var date = addZero(d.getDate(), 2);
     var month = addZero(d.getMonth() + 1, 2);
 
-    var year = d.getFullYear()
-    return date + "-" + month + "-" + year
-    // + ":" + ms;
-}
 
-export function DateOnlyDate(dateString) {
-    if (dateString === null || dateString === undefined) 
+export function infection(data) {
+    if (data === null || data === undefined) {
         return null
-    var d = new Date(dateString);
-    return d.getTime()
-}
+    }
 
-export function infection(data, series, country) {
-    return getCountryData(data, series, country, "confirmed")
+    return data["confirmed"]
 
 }
 
@@ -50,12 +39,22 @@ export function symptoms(data, series, country) {
     return getCountryData(data, series, country, "deltaConfirmed")
 }
 
-export function ill(data, series, country) {
-    return getCountryData(data, series, country, "deaths")
+export function ill(data) {
+    if (data === null || data === undefined) {
+        return null
+    }
+    return data["deaths"]
 }
 
-export function deads(data, series, country) {
-    return getCountryData(data, series, country, "deaths", true)
+export function deads(data, previousData) {
+    if (data === null || data === undefined) {
+        return null
+    }
+    if (previousData === null || previousData === undefined) {
+        return data["deaths"]
+    }
+    
+    return data["deaths"] - previousData["deaths"]
 }
 
 export function timeSeries(series, percentage, start) {

@@ -27,12 +27,9 @@ import {configuration} from 'variables/configuration'
 
 import App from 'components/App/App'
 
-import { getData } from "variables/simulation/simulationRealData";
 
 setGlobal({
-  configuration: configuration,
-  data: getData("Germany"),
-  country: "Germany"
+  configuration: configuration
 });
 
 const getReduxStore = () => {

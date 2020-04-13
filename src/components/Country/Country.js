@@ -9,8 +9,6 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Localize from "components/Localize/Localize.js";
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 import countries from "assets/misc/countries.json";
-import {setGlobal} from 'reactn';
-import { getData } from "variables/simulation/simulationRealData";
 
 var Enumerable = require('linq');
 
@@ -37,8 +35,6 @@ function CountryDropDown(props) {
     }
 
     const setSelectedCountry = (country) => {
-        var newData = getData(country.country)
-        setGlobal({data: newData, country: country.country})
         if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined) 
             props.onSelectedCountry(country)
     }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 import Chart from "./Chart.js";
@@ -8,10 +8,10 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
 
-import {usePrevious, numberWithCommas} from "utils/misc";
+import {numberWithCommas} from "utils/misc";
+import {formatDateOnlyDate} from "utils/date";
 
-import {infection, symptoms, random, ill, deads, formatDateOnlyDate} from 'variables/simulation/simulationRealData.js';
-import { useGlobal } from 'reactn';
+import {infection, symptoms, random, ill, deads} from 'variables/simulation/simulationRealData.js';
 
 const useStyles = makeStyles(styles);
 
@@ -26,46 +26,19 @@ function RealTime(props, {
     'ill': ill,
     'deads': deads
   };
-  const classes = useStyles();
-  const [timeSeries,
-    setTimeSeries] = useState([
-  ]);
-  const [data,
-    setData] = useGlobal('data');
+
 
   const options = {yaxis: 10}
 
-
-
-  const prevProps = usePrevious(props)
-  useEffect(() => {
-
-
-    if (prevProps !== null && prevProps !== undefined && prevProps.index !== props.index) {
-      setTimeSeries((oldSeries) => {
-
-        if (props.index === 0) {
-          oldSeries = []
-        }
-
-        const method = funcMap[props.function];
-        if (typeof method === 'function') {
-          const result = method(data, [...oldSeries], props.country)
-          return result.series
-        } else {
-          return [...oldSeries]
-        }
-      })
-    }
-
-  }, [props.index]);
+  const classes = useStyles();
  
   return (
     <div>
       <CardHeader color={props.color}>
         <Chart
+          method={funcMap[props.function]}
           bar_color={props.bar_color}
-          timeSeries={timeSeries}
+          data={props.data}
           options={options}
           height={props.height}/>
       </CardHeader>
@@ -76,7 +49,7 @@ function RealTime(props, {
         }}>
           {props.timestampTitle}
           {" "}
-          {timeSeries.length > 0 ? formatDateOnlyDate(timeSeries[timeSeries.length - 1].timeStamp)  : ""}
+          {props.data !== null && props.data !== undefined ? formatDateOnlyDate(props.data.lastUpdate)  : ""}
           {":  "}
           <AnimatedNumber style={{
             transition: '0.8s ease-out',
@@ -85,7 +58,7 @@ function RealTime(props, {
             fontWeight: 600
           }} // frameStyle={perc => (} //     perc === 100 ? {} : {backgroundColor: props.bar_color}
             // )}
-            stepPrecision={0} value={timeSeries.length > 0 ? timeSeries[timeSeries.length - 1].value : ""} formatValue={n => `${numberWithCommas(n)} `}/>
+            stepPrecision={0} value={props.data !== null && props.data !== undefined ? funcMap[props.function](props.data) : ""} formatValue={n => `${numberWithCommas(n)} `}/>
 
         </p>
       </CardBody>

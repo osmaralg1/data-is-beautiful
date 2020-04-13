@@ -2,18 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Chart from "react-apexcharts";
 import { numberWithCommas } from 'utils/misc.js'
 
+import {DateOnlyDate} from 'utils/date.js';
+
 function MyChart(props) {
 
-
-
-  const getTimeSeriesValue = (timeSeries) => {
-    return timeSeries.map(timeSerie => {
-      return {y: timeSerie.value, x: timeSerie.timeStamp}
-    })
-  }
-
-  const getOptions = (timeSeries, options) => {
-    return {
+  const options = {
 
       theme: {
         monochrome: {
@@ -105,48 +98,48 @@ function MyChart(props) {
   }
       }
     }
-  }
 
-  const getSeries = (timeSeries) => {
-    return [
+
+  const [series,
+    setSeries] = useState([
       {
         name: "Infected people",
-        data: getTimeSeriesValue(timeSeries)
+        data: []
       }
-    ]
-  }
-  const [chartConfig,
-    setChartConfig] = useState({
-    options: getOptions(props.timeSeries, props.options),
-    series: getSeries(props.timeSeries)
-  })
-
-  const [timeSeries,
-    setTimeSeries] = useState(props.timeSeries)
+    ])
 
   useEffect(() => {
   
-    setTimeSeries(() => {
-      var newTimeSeries = props.timeSeries
-      var newOptions = props.options
-      var newChartConfig = {
-        options: getOptions(newTimeSeries, newOptions),
-        series: getSeries(newTimeSeries)
-      }    
-      setChartConfig(newChartConfig)
-      return newTimeSeries
-    })
+    if (props.data !== null && props.data !== undefined) {
+      
+      setSeries((oldSeries) => {
+        var newData = oldSeries[0].data
+        var lastData = null
+        if (newData.length > 0)
+          lastData = newData[newData.length - 1].lastData
+        newData.push({y: props.method(props.data, lastData), x: DateOnlyDate(props.data.lastUpdate), lastData: props.data})
+        
+        var newSeries = [
+          {
+            name: oldSeries[0].name,
+            data: newData
+          }
+        ]
+        return newSeries
+      })
+    }
+    
 
 
-  }, [props.timeSeries]);
+  }, [props.data]);
 
   return (
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
           <Chart
-            options={chartConfig.options}
-            series={chartConfig.series}
+            options={options}
+            series={series}
             type="bar"
             width="100%"
             height={props.height} />

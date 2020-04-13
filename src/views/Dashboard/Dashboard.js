@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 // @material-ui/core
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -18,31 +18,11 @@ import RealtimeChart from "views/RealtimeChart/RealtimeChart.js";
 import Parameter from "views/Parameter/Parameter.js";
 
 import {withLocalize} from "react-localize-redux";
-import { useGlobal } from 'reactn';
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import Table from 'views/Table/Table';
 import Realtime from 'views/RealtimeChart/TimeSeries.js';
 
 const useStyles = makeStyles(styles);
-
-function formatDateOnlyDate(dateString) {
-  if (dateString === null || dateString === undefined) 
-    return null
-  var d = new Date(dateString);
-  var date = addZero(d.getDate(), 2);
-  var month = addZero(d.getMonth() + 1, 2);
-
-  var year = d.getFullYear()
-  return date + "-" + month + "-" + year
-  // + ":" + ms;
-}
-
-function addZero(x, n) {
-  while (x.toString().length < n) {
-    x = "0" + x;
-  }
-  return x;
-}
 
 function Dashboard(props) {
 
@@ -54,39 +34,14 @@ function Dashboard(props) {
 
     return import (`../../variables/translations/Dashboard/${activeLanguageCode}.json`)
   }
+
   const [data,
-    setData] = useGlobal('data');
+    setData] = useState(null);
 
-  const [country,
-    setCountry] = useGlobal('country');
-
-  const [index,
-    setIndex] = useState(0);
-
-  const [stop,
-    setStop] = React.useState(false);
-
-  const restart = () => {
-    setIndex(0)
+  const onTick = (newData) => {
+    setData(newData)
   }
-  
-  const onTick = () => {
-    
-      setIndex (oldIndex => {
-        if (oldIndex < data.length - 1) {
-          
-          return oldIndex + 1
-        } else {
-          setStop(true)
-        }
 
-      })
-    }
-
-    useEffect(() => {
-      setIndex(0)
-    }, [country])
-  
   const classes = useStyles();
   return (
     <div>
@@ -146,13 +101,13 @@ function Dashboard(props) {
       {/**
       <GridContainer>
         <GridItem xs={12} sm={6} md={6}>
-          <Parameter onTick={onTick} stop={stop} restart={restart}></Parameter>
+          <Parameter onTick={onTick}></Parameter>
         </GridItem>
         </GridContainer/>
         <GridItem xs={12} sm={6} md={6}>
           <Card chart>
             <RealtimeChart
-              index={index}
+              data={data}
               bar_color='#1a97cc'
               height="300"
               function="infection"
@@ -172,7 +127,7 @@ function Dashboard(props) {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <RealtimeChart
-            index={index}
+              data={data}
               bar_color='#037902'
               height="200"
               function="symptoms"
@@ -196,7 +151,7 @@ function Dashboard(props) {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <RealtimeChart
-            index={index}
+            data={data}
               bar_color='#c2d232'
               height="200"
               function="ill"
@@ -219,7 +174,7 @@ function Dashboard(props) {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <RealtimeChart
-            index={index}
+            data={data}
               bar_color='#ec4c49'
               height="200"
               function="deads"

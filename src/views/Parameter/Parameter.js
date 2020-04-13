@@ -14,28 +14,31 @@ import Rewind from "@material-ui/icons/FastRewind";
 import Restart from "@material-ui/icons/SettingsBackupRestore";
 import corona from "variables/assets/img/corona.jpg";
 import CustomInput from "components/CustomInput/CustomInput.js";
-import { useGlobal, setGlobal } from 'reactn';
+import { getData } from "variables/simulation/simulationRealData";
 
-import {usePrevious} from "utils/misc";
+
+const initCountry = "Germany"
+
 
 export default function Parameter(props) {
-  
 
-  const prevProps = usePrevious(props)
   const [country,
-    setCountry] = useGlobal("country")
+    setCountry] = React.useState(initCountry);
 
+  const [data,
+      setData] = React.useState(getData(initCountry));
+    
   const [stop,
       setStop] = React.useState(false);
 
+  const [index,
+        setIndex] = React.useState(0);
 
   const pause = () => {
     setStop(true)
-
   }
 
   const restart = () => {
-    
     if (props.restart  !== null && props.restart !== undefined) {
       props.restart()
     }
@@ -51,7 +54,6 @@ export default function Parameter(props) {
     let mounted = true;
         let interval = setInterval(() => {
 
-
           setTimeout(() => {
             
             if (stop || props.stop ) {
@@ -60,11 +62,23 @@ export default function Parameter(props) {
             }
             if (mounted) { //*********************************************
 
+              var lastIndex = null
+              setIndex(oldIndex => {
+
+                
+                if (oldIndex > data.length - 1){
+                  return clearInterval(interval)
+                } else {
+                  lastIndex = oldIndex
+                  return oldIndex + 1
+                }
+                
+                  
+              })
+
               if (props.onTick !== null && props.onTick !== undefined) {
-                props.onTick()
+                props.onTick(data[lastIndex])
               }
-    
-    
             } //*********************************************************
           }, 200);
         }, 200);
@@ -75,7 +89,7 @@ export default function Parameter(props) {
     return () => {
       mounted = false;
     };
-  }, [country, props.stop, stop]);
+  }, [stop]);
  
 
 
@@ -96,7 +110,8 @@ export default function Parameter(props) {
                 <GridItem xs={12} sm={4} md={4}>
                   <CountryDropDown
                     onSelectedCountry={(country) => {
-                      setGlobal({country: country.country})
+                      setData(country.country)
+                      setCountry(country.country)
                   }}></CountryDropDown>
                   <h3>{country}</h3>
 
