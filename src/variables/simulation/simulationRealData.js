@@ -1,4 +1,5 @@
 import {getRandomInt} from 'utils/misc.js';
+import data from "variables/assets/data.json";
 
 var Enumerable = require('linq');
 function addZero(x, n) {
@@ -54,7 +55,7 @@ export function ill(data, series, country) {
 }
 
 export function deads(data, series, country) {
-    return getCountryData(data,series, country, "deaths", true)
+    return getCountryData(data, series, country, "deaths", true)
 }
 
 export function timeSeries(series, percentage, start) {
@@ -98,7 +99,7 @@ export function random(series) {
 
 }
 
-export function getData(data, country) {
+export function getData(country) {
     var countryData = Enumerable
         .from(data)
         .where("$.country==='" + country + "'")
@@ -122,19 +123,16 @@ export function getData(data, country) {
     return dataWithNumber
 }
 
-
 export function getCountryData(data, series, country, propName, comparetoLast) {
-    var dataWithNumber = getData(data, country)
 
-    if (series.length < dataWithNumber.length) {
+    if (series.length < data.length) {
         series.push({
-            timeStamp: DateOnlyDate(dataWithNumber[series.length].lastUpdate),
+            timeStamp: DateOnlyDate(data[series.length].lastUpdate),
             value: comparetoLast === true
                 ? series.length < 2
-                    ? dataWithNumber[series.length][propName]
-                    : dataWithNumber[series.length][propName] - dataWithNumber[series.length - 1][propName]: dataWithNumber[series.length][propName]
+                    ? data[series.length][propName]
+                    : data[series.length][propName] - data[series.length - 1][propName]: data[series.length][propName]
         })
-        dataWithNumber.length = 0
         return {series: series, stop: false};
     } else {
         return {series: series, stop: true}

@@ -22,14 +22,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { LocalizeProvider, localizeReducer } from 'react-localize-redux';
 import { setGlobal } from 'reactn';
 
-
 import "assets/css/material-dashboard-react.css?v=1.8.0";
-import data from "variables/assets/data.json";
+import {configuration} from 'variables/configuration'
 
 import App from 'components/App/App'
 
+import { getData } from "variables/simulation/simulationRealData";
+
 setGlobal({
-  data: data
+  configuration: configuration,
+  data: getData("Germany"),
+  country: "Germany"
 });
 
 const getReduxStore = () => {

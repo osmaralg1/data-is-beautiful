@@ -9,14 +9,19 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Localize from "components/Localize/Localize.js";
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 import countries from "assets/misc/countries.json";
+import {setGlobal} from 'reactn';
+import { getData } from "variables/simulation/simulationRealData";
+
 var Enumerable = require('linq');
 
 const useStyles = makeStyles(styles);
 
-
 function CountryDropDown(props) {
 
-    const sortedCountries = Enumerable.from(countries).orderBy("$.country").toArray()
+    const sortedCountries = Enumerable
+        .from(countries)
+        .orderBy("$.country")
+        .toArray()
 
     const classes = useStyles();
 
@@ -26,15 +31,17 @@ function CountryDropDown(props) {
             return;
         }
 
-        // return import (`../../assets/translations/countries/${activeLanguageCode}.json`)
+        // return import
+        // (`../../assets/translations/countries/${activeLanguageCode}.json`)
         return import (`../../assets/translations/countries/en.json`)
     }
 
     const setSelectedCountry = (country) => {
-        if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined)
+        var newData = getData(country.country)
+        setGlobal({data: newData, country: country.country})
+        if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined) 
             props.onSelectedCountry(country)
     }
-
 
     return ([ < Localize getTranslations = {
             getTranslations

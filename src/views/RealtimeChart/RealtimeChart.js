@@ -34,64 +34,27 @@ function RealTime(props, {
     setData] = useGlobal('data');
 
   const options = {yaxis: 10}
-  const [stop,
-    setStop] = useState(false)
+
 
 
   const prevProps = usePrevious(props)
   useEffect(() => {
 
-    let mounted = true;
 
-      if (stop === true ) {
-        if (prevProps !== null && prevProps !== undefined) {
-          if (prevProps.country !== props.country || prevProps.restart !== props.restart || prevProps.start !== props.start) {
-             
-             setStop(false)
-           }
-         }
-      } else {
-        let interval = setInterval(() => {
+    if (prevProps !== null && prevProps !== undefined && prevProps.index !== props.index) {
+      setTimeSeries((oldSeries) => {
 
-          setTimeout(() => {
-    
-            if (stop) {
-              return clearInterval(interval)
-            }
-            if (mounted) { //*********************************************
-    
-              setTimeSeries((oldSeries) => {
-                if (prevProps !== null && prevProps !== undefined) {
-                 if (prevProps.country !== props.country || prevProps.restart !== props.restart) {
-                    oldSeries = [
-                    ]
-                  } else if (prevProps.pause !== props.pause ) {
-                    setStop(true)
-                    return [...oldSeries]
-                  }
-                }
-                const method = funcMap[props.function];
-                if (typeof method === 'function') {
-                  const result = method(data, [...oldSeries], props.country)
-                  setStop(result.stop)
-                  return result.series
-                } else {
-                  setStop(true)
-                  return [...oldSeries]
-                }
-              })
-    
-            } //*********************************************************
-          }, 100);
-        }, 100);
-    
-  
-      }
-      
-    return () => {
-      mounted = false;
-    };
-  }, [timeSeries, props.country, props.restart, props.pause, props.start]);
+        const method = funcMap[props.function];
+        if (typeof method === 'function') {
+          const result = method(data, [...oldSeries], props.country)
+          return result.series
+        } else {
+          return [...oldSeries]
+        }
+      })
+    }
+
+  }, [props.index]);
  
   return (
     <div>

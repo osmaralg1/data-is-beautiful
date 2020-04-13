@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -14,21 +14,24 @@ import Rewind from "@material-ui/icons/FastRewind";
 import Restart from "@material-ui/icons/SettingsBackupRestore";
 import corona from "variables/assets/img/corona.jpg";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import { useGlobal, setGlobal } from 'reactn';
+
+import {usePrevious} from "utils/misc";
 
 export default function Parameter(props) {
+  
 
+  const prevProps = usePrevious(props)
   const [country,
-    setCountry] = React.useState("Germany");
+    setCountry] = useGlobal("country")
 
-  const setSelectedCountry = (country) => {
-    if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined) 
-      props.onSelectedCountry(country)
-    setCountry(country.country)
-  }
+  const [stop,
+      setStop] = React.useState(false);
+
 
   const pause = () => {
-    if (props.onPause !== null && props.onPause !== undefined) 
-      props.onPause()
+    setStop(true)
+
   }
 
   const restart = () => {
@@ -40,6 +43,66 @@ export default function Parameter(props) {
     if (props.onStart !== null && props.onStart !== undefined) 
       props.onStart()
   }
+
+  useEffect(() => {
+
+    let mounted = true;
+
+      if (stop === true ) {
+        if (prevProps !== null && prevProps !== undefined) {
+          if (prevProps.country !== props.country || prevProps.restart !== props.restart || prevProps.start !== props.start) {
+             
+             setStop(false)
+           }
+         }
+      } else {
+        let interval = setInterval(() => {
+
+          setTimeout(() => {
+    
+            if (stop || props.stop ) {
+              return clearInterval(interval)
+            }
+            if (mounted) { //*********************************************
+
+              if (props.onTick !== null && props.onTick !== undefined) {
+                props.onTick()
+              }
+    
+              // setTimeSeries((oldSeries) => {
+              //   if (prevProps !== null && prevProps !== undefined) {
+              //    if (prevProps.country !== props.country || prevProps.restart !== props.restart) {
+              //       oldSeries = [
+              //       ]
+              //     } else if (prevProps.pause !== props.pause ) {
+              //       setStop(true)
+              //       return [...oldSeries]
+              //     }
+              //   }
+              //   const method = funcMap[props.function];
+              //   if (typeof method === 'function') {
+              //     const result = method(data, [...oldSeries], props.country)
+              //     setStop(result.stop)
+              //     return result.series
+              //   } else {
+              //     setStop(true)
+              //     return [...oldSeries]
+              //   }
+              // })
+    
+            } //*********************************************************
+          }, 200);
+        }, 200);
+    
+  
+      }
+      
+    return () => {
+      mounted = false;
+    };
+  }, [country, props.stop]);
+ 
+
 
   return (
     <div>
@@ -58,7 +121,7 @@ export default function Parameter(props) {
                 <GridItem xs={12} sm={4} md={4}>
                   <CountryDropDown
                     onSelectedCountry={(country) => {
-                    setSelectedCountry(country)
+                      setGlobal({country: country.country})
                   }}></CountryDropDown>
                   <h3>{country}</h3>
 
