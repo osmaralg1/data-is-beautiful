@@ -9,6 +9,7 @@ function addZero(x, n) {
     return x;
 }
 
+
 export function formatDateOnlyDate(dateString) {
     if (dateString === null || dateString === undefined) 
         return null
@@ -47,7 +48,6 @@ function infectionArray() {
 
 export function symptoms(data, series, country) {
     return getCountryData(data, series, country, "deltaConfirmed")
-
 }
 
 export function ill(data, series, country) {

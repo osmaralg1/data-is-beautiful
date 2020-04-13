@@ -20,7 +20,9 @@ import Parameter from "views/Parameter/Parameter.js";
 import {withLocalize} from "react-localize-redux";
 import { useGlobal } from 'reactn';
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
-import Table from 'views/Table/Table'
+import Table from 'views/Table/Table';
+import Realtime from 'views/RealtimeChart/TimeSeries.js';
+
 const useStyles = makeStyles(styles);
 
 function formatDateOnlyDate(dateString) {
@@ -88,12 +90,65 @@ function Dashboard(props) {
   const classes = useStyles();
   return (
     <div>
-      <Localize getTranslations={getTranslations}/>
-      <GridContainer>
+    <GridContainer>
 
+      <GridItem xs={12} sm={6} md={6}>
+        <Parameter onTick={onTick} stop={stop} restart={restart}></Parameter>
+      </GridItem>
+      <GridItem xs={12} sm={6} md={6}>
+        <Realtime data={data}></Realtime>
+      </GridItem>
+      <GridItem xs={12} sm={12} md={4}>
+        <Realtime data={data}></Realtime>
+      </GridItem>
+      <GridItem xs={12} sm={12} md={4}>
+        <Realtime data={data}></Realtime>
+      </GridItem>
+      <GridItem xs={12} sm={12} md={4}>
+        <Realtime data={data}></Realtime>
+      </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+
+          <Table
+            doNotFetch={true}
+            title="Report"
+            address={"corona-report"}
+            filter={{
+            languageId: 1
+          }}
+            columns={[
+            {
+              id: 1,
+              title: "Date",
+              name: ["lastUpdate"],
+              format: formatDateOnlyDate
+            }, {
+              id: 2,
+              title: "Confirmed - Daily",
+              name: ["deltaConfirmed"]
+            }, {
+              id: 3,
+              title: "Confirmed - Cummulative",
+              name: ["confirmed"]
+            }, {
+              id: 2,
+              title: "Deaths",
+              name: ["deaths"]
+            }
+          ]}
+            icon={< Event />}
+            color={"danger"}>
+
+            ></Table>
+
+        </GridItem>
+    </GridContainer>
+      {/**
+      <GridContainer>
         <GridItem xs={12} sm={6} md={6}>
           <Parameter onTick={onTick} stop={stop} restart={restart}></Parameter>
         </GridItem>
+        </GridContainer/>
         <GridItem xs={12} sm={6} md={6}>
           <Card chart>
             <RealtimeChart
@@ -183,42 +238,10 @@ function Dashboard(props) {
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={12}>
 
-          <Table
-            doNotFetch={true}
-            title="Report"
-            address={"corona-report"}
-            filter={{
-            languageId: 1
-          }}
-            columns={[
-            {
-              id: 1,
-              title: "Date",
-              name: ["lastUpdate"],
-              format: formatDateOnlyDate
-            }, {
-              id: 2,
-              title: "Confirmed - Daily",
-              name: ["deltaConfirmed"]
-            }, {
-              id: 3,
-              title: "Confirmed - Cummulative",
-              name: ["confirmed"]
-            }, {
-              id: 2,
-              title: "Deaths",
-              name: ["deaths"]
-            }
-          ]}
-            icon={< Event />}
-            color={"danger"}>
+      </GridContainer>**/}
+      <Localize getTranslations={getTranslations}/>
 
-            ></Table>
-
-        </GridItem>
-      </GridContainer>
     </div>
   )
 }
