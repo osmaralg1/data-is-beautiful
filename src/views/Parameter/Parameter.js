@@ -1,4 +1,4 @@
-import React, {useState, useEffect}  from "react";
+import React, {useEffect}  from "react";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -35,32 +35,27 @@ export default function Parameter(props) {
   }
 
   const restart = () => {
-    if (props.onRestart !== null && props.onRestart !== undefined) 
-      props.onRestart()
+    
+    if (props.restart  !== null && props.restart !== undefined) {
+      props.restart()
+    }
+    setStop(false)
   }
 
   const start = () => {
-    if (props.onStart !== null && props.onStart !== undefined) 
-      props.onStart()
+    setStop(false)
   }
 
   useEffect(() => {
 
     let mounted = true;
-
-      if (stop === true ) {
-        if (prevProps !== null && prevProps !== undefined) {
-          if (prevProps.country !== props.country || prevProps.restart !== props.restart || prevProps.start !== props.start) {
-             
-             setStop(false)
-           }
-         }
-      } else {
         let interval = setInterval(() => {
 
+
           setTimeout(() => {
-    
+            
             if (stop || props.stop ) {
+              
               return clearInterval(interval)
             }
             if (mounted) { //*********************************************
@@ -69,38 +64,18 @@ export default function Parameter(props) {
                 props.onTick()
               }
     
-              // setTimeSeries((oldSeries) => {
-              //   if (prevProps !== null && prevProps !== undefined) {
-              //    if (prevProps.country !== props.country || prevProps.restart !== props.restart) {
-              //       oldSeries = [
-              //       ]
-              //     } else if (prevProps.pause !== props.pause ) {
-              //       setStop(true)
-              //       return [...oldSeries]
-              //     }
-              //   }
-              //   const method = funcMap[props.function];
-              //   if (typeof method === 'function') {
-              //     const result = method(data, [...oldSeries], props.country)
-              //     setStop(result.stop)
-              //     return result.series
-              //   } else {
-              //     setStop(true)
-              //     return [...oldSeries]
-              //   }
-              // })
     
             } //*********************************************************
           }, 200);
         }, 200);
     
   
-      }
+      // }
       
     return () => {
       mounted = false;
     };
-  }, [country, props.stop]);
+  }, [country, props.stop, stop]);
  
 
 
@@ -146,7 +121,7 @@ export default function Parameter(props) {
                         {<Restart></Restart>}
                       </Icon>
                     </GridItem>
-                    <GridItem xs={12} sm={2} md={2}>
+                    {/* <GridItem xs={12} sm={2} md={2}>
                       <Icon onClick={() => pause()}
                         >
                         {<Forward></Forward>}
@@ -157,7 +132,7 @@ export default function Parameter(props) {
                         >
                         {<Rewind></Rewind>}
                       </Icon>
-                    </GridItem>
+                    </GridItem> */}
                   </GridContainer>
                   <GridContainer>
                   <GridItem xs={12} sm={6} md={6}>

@@ -44,6 +44,10 @@ function RealTime(props, {
     if (prevProps !== null && prevProps !== undefined && prevProps.index !== props.index) {
       setTimeSeries((oldSeries) => {
 
+        if (props.index === 0) {
+          oldSeries = []
+        }
+
         const method = funcMap[props.function];
         if (typeof method === 'function') {
           const result = method(data, [...oldSeries], props.country)

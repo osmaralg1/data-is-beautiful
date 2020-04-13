@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // @material-ui/core
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -55,15 +55,21 @@ function Dashboard(props) {
   const [data,
     setData] = useGlobal('data');
 
+  const [country,
+    setCountry] = useGlobal('country');
+
   const [index,
     setIndex] = useState(0);
 
-    const [stop,
-      setStop] = React.useState(false);
+  const [stop,
+    setStop] = React.useState(false);
 
+  const restart = () => {
+    setIndex(0)
+  }
+  
   const onTick = () => {
     
-    console.log("ontick")
       setIndex (oldIndex => {
         if (oldIndex < data.length - 1) {
           
@@ -74,6 +80,10 @@ function Dashboard(props) {
 
       })
     }
+
+    useEffect(() => {
+      setIndex(0)
+    }, [country])
   
   const classes = useStyles();
   return (
@@ -82,7 +92,7 @@ function Dashboard(props) {
       <GridContainer>
 
         <GridItem xs={12} sm={6} md={6}>
-          <Parameter onTick={onTick} stop={stop}></Parameter>
+          <Parameter onTick={onTick} stop={stop} restart={restart}></Parameter>
         </GridItem>
         <GridItem xs={12} sm={6} md={6}>
           <Card chart>
