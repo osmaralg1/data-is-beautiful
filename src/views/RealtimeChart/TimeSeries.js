@@ -48,7 +48,7 @@ class Realtime extends React.Component {
     static displayName = "AggregatorDemo";
 
     state = {
-        time: new Date(2020, 1, 1),
+        time: new Date(this.props.data[0].lastUpdate),
         events: new Ring(200),
         percentile50Out: new Ring(100),
         percentile90Out: new Ring(100),
@@ -57,7 +57,6 @@ class Realtime extends React.Component {
     };
 
     getNewEvent = t => {
-        const timeStamp = this.props.data[this.state.index].lastUpdate
         
         var newEvent = null
         if (this.state.index < this.props.data.length) {
