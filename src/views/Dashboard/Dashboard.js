@@ -39,7 +39,7 @@ function Dashboard(props) {
   }
 
   const [data,
-    setData] = useState(getData("China"));
+    setData] = useState(getData("Germany"));
 
 
   const onTick = (newData) => {

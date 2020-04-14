@@ -40,7 +40,7 @@ const sec = 1000;
 const minute = 60 * sec;
 const hours = 60 * minute;
 const day = hours * 24
-const rate = 100;
+const rate = 200;
 const increment = day;
 const timeWindow = 100 * day;
 
@@ -53,6 +53,7 @@ class Realtime extends React.Component {
         percentile50Out: new Ring(100),
         percentile90Out: new Ring(100),
         index: 0,
+        max: 0
     };
 
     getNewEvent = t => {
@@ -60,13 +61,20 @@ class Realtime extends React.Component {
 
         const timeStamp = this.props.data[this.state.index].lastUpdate
 
-        const value = funcMap[this.props.function](this.props.data[this.state.index])
+        let lastValue = null
+        if (this.state.index > 0)
+            lastValue = this.props.data[this.state.index - 1]
+        const value = funcMap[this.props.function](this.props.data[this.state.index], lastValue)
 
+        let max = this.state.max
+        if (value > max)
+            max = value
         if (this.state.index > this.props.data.length - 2){
             //this.setState({index: 0})
+            this.setState({imax: max })
         }
         else{
-            this.setState({index: this.state.index + 1 })
+            this.setState({index: this.state.index + 1, max: max })
         }
         //this.setState({index: this.state.index + 1})
         const newEvent = new TimeEvent(t, parseInt( value, 10));
@@ -226,7 +234,7 @@ class Realtime extends React.Component {
                                         id="y"
                                         label="Value"
                                         min={0}
-                                        max={funcMap[this.props.function](this.props.data[this.state.index])}
+                                        max={this.state.max}
                                         width="70"
                                         type="linear"
                                     />
