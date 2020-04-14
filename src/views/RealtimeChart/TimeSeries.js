@@ -13,6 +13,7 @@ import Ring from "ringjs";
 import {infection, symptoms, random, ill, deads, formatDateOnlyDate} from 'variables/simulation/simulationRealData.js';
 import { useGlobal } from 'reactn';
 
+import { funcMap } from "variables/simulation/simulationRealData";
 import {
     TimeSeries,
     TimeRange,
@@ -41,7 +42,7 @@ const hours = 60 * minute;
 const day = hours * 24
 const rate = 100;
 const increment = day;
-const timeWindow = 30 * day;
+const timeWindow = 100 * day;
 
 class Realtime extends React.Component {
     static displayName = "AggregatorDemo";
@@ -58,10 +59,9 @@ class Realtime extends React.Component {
         const base = Math.sin(t.getTime() / 10000000) * 350 + 500;
 
         const timeStamp = this.props.data[this.state.index].lastUpdate
-        const confirmed = this.props.data[this.state.index].confirmed
-        console.log(confirmed)
-        console.log(this.props.data.length)
-        console.log(this.state.index)
+
+        const value = funcMap[this.props.function](this.props.data[this.state.index])
+
         if (this.state.index > this.props.data.length - 2){
             //this.setState({index: 0})
         }
@@ -69,12 +69,9 @@ class Realtime extends React.Component {
             this.setState({index: this.state.index + 1 })
         }
         //this.setState({index: this.state.index + 1})
-        const newEvent = new TimeEvent(t, parseInt( confirmed, 10));
+        const newEvent = new TimeEvent(t, parseInt( value, 10));
         
-        //const result = infection(this.props.data, [], this.props.country)
-        console.log("original", new Date(timeStamp))
-        console.log(base)
-        console.log("timeevent",[t, parseInt(base + Math.random() * 1000, 10)])
+
         return newEvent
     };
 
@@ -229,7 +226,7 @@ class Realtime extends React.Component {
                                         id="y"
                                         label="Value"
                                         min={0}
-                                        max={this.props.data[this.state.index].confirmed}
+                                        max={funcMap[this.props.function](this.props.data[this.state.index])}
                                         width="70"
                                         type="linear"
                                     />

@@ -5,13 +5,13 @@ import data from "variables/assets/data.json";
 
 var Enumerable = require('linq');
 
-
-export function formatDateOnlyDate(dateString) {
-    if (dateString === null || dateString === undefined) 
-        return null
-    var d = new Date(dateString);
-    var date = addZero(d.getDate(), 2);
-    var month = addZero(d.getMonth() + 1, 2);
+export const funcMap = {
+    'infection': infection,
+    'symptoms': symptoms,
+    'random': random,
+    'ill': ill,
+    'deads': deads
+  };
 
 
 export function infection(data) {
@@ -36,7 +36,10 @@ function infectionArray() {
 }
 
 export function symptoms(data, series, country) {
-    return getCountryData(data, series, country, "deltaConfirmed")
+    if (data === null || data === undefined) {
+        return null
+    }
+    return data["deltaConfirmed"]
 }
 
 export function ill(data) {

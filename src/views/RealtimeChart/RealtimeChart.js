@@ -11,7 +11,7 @@ import AnimatedNumber from 'react-animated-number';
 import {numberWithCommas} from "utils/misc";
 import {formatDateOnlyDate} from "utils/date";
 
-import {infection, symptoms, random, ill, deads} from 'variables/simulation/simulationRealData.js';
+import {funcMap } from "variables/simulation/simulationRealData";
 
 const useStyles = makeStyles(styles);
 
@@ -19,19 +19,13 @@ function RealTime(props, {
   className,
   ...rest
 }) {
-  const funcMap = {
-    'infection': infection,
-    'symptoms': symptoms,
-    'random': random,
-    'ill': ill,
-    'deads': deads
-  };
 
-
-  const options = {yaxis: 10}
+  const options = {
+    yaxis: 10
+  }
 
   const classes = useStyles();
- 
+
   return (
     <div>
       <CardHeader color={props.color}>
@@ -49,16 +43,22 @@ function RealTime(props, {
         }}>
           {props.timestampTitle}
           {" "}
-          {props.data !== null && props.data !== undefined ? formatDateOnlyDate(props.data.lastUpdate)  : ""}
+          {props.data !== null && props.data !== undefined
+            ? formatDateOnlyDate(props.data.lastUpdate)
+            : ""}
           {":  "}
-          <AnimatedNumber style={{
+          <AnimatedNumber
+            style={{
             transition: '0.8s ease-out',
             transitionProperty: 'background-color, color',
             fontSize: 25,
             fontWeight: 600
-          }} // frameStyle={perc => (} //     perc === 100 ? {} : {backgroundColor: props.bar_color}
-            // )}
-            stepPrecision={0} value={props.data !== null && props.data !== undefined ? funcMap[props.function](props.data) : ""} formatValue={n => `${numberWithCommas(n)} `}/>
+          }}
+            stepPrecision={0}
+            value={props.data !== null && props.data !== undefined
+            ? funcMap[props.function](props.data)
+            : ""}
+            formatValue={n => `${numberWithCommas(n)} `}/>
 
         </p>
       </CardBody>

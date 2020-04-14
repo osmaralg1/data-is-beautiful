@@ -21,6 +21,9 @@ import {withLocalize} from "react-localize-redux";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import Table from 'views/Table/Table';
 import Realtime from 'views/RealtimeChart/TimeSeries.js';
+import {formatDateOnlyDate} from "utils/date";
+
+import { getData } from "variables/simulation/simulationRealData";
 
 const useStyles = makeStyles(styles);
 
@@ -36,10 +39,11 @@ function Dashboard(props) {
   }
 
   const [data,
-    setData] = useState(null);
+    setData] = useState(getData("China"));
+
 
   const onTick = (newData) => {
-    setData(newData)
+    // setData(newData)
   }
 
   const classes = useStyles();
@@ -48,19 +52,19 @@ function Dashboard(props) {
     <GridContainer>
 
       <GridItem xs={12} sm={6} md={6}>
-        <Parameter onTick={onTick} stop={stop} restart={restart}></Parameter>
+        <Parameter onTick={onTick}></Parameter>
       </GridItem>
       <GridItem xs={12} sm={6} md={6}>
-        <Realtime data={data}></Realtime>
+        <Realtime data={data} function="infection"></Realtime>
       </GridItem>
       <GridItem xs={12} sm={12} md={4}>
-        <Realtime data={data}></Realtime>
+        <Realtime data={data} function="symptoms"></Realtime>
       </GridItem>
       <GridItem xs={12} sm={12} md={4}>
-        <Realtime data={data}></Realtime>
+        <Realtime data={data} function="ill"></Realtime>
       </GridItem>
       <GridItem xs={12} sm={12} md={4}>
-        <Realtime data={data}></Realtime>
+        <Realtime data={data} function="deads"></Realtime>
       </GridItem>
               <GridItem xs={12} sm={12} md={12}>
 
