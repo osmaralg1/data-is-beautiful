@@ -57,27 +57,25 @@ class Realtime extends React.Component {
     };
 
     getNewEvent = t => {
-        const base = Math.sin(t.getTime() / 10000000) * 350 + 500;
-
         const timeStamp = this.props.data[this.state.index].lastUpdate
-
-        let lastValue = null
-        if (this.state.index > 0)
-            lastValue = this.props.data[this.state.index - 1]
-        const value = funcMap[this.props.function](this.props.data[this.state.index], lastValue)
-
-        let max = this.state.max
-        if (value > max)
-            max = value
-        if (this.state.index > this.props.data.length - 2){
-            //this.setState({index: 0})
-            this.setState({imax: max })
-        }
-        else{
+        
+        var newEvent = null
+        if (this.state.index < this.props.data.length) {
+            let lastValue = null
+            if (this.state.index > 0)
+                lastValue = this.props.data[this.state.index - 1]
+            const value = funcMap[this.props.function](this.props.data[this.state.index], lastValue)
+    
+            let max = this.state.max
+            if (value > max)
+                max = value
+    
             this.setState({index: this.state.index + 1, max: max })
+    
+            //this.setState({index: this.state.index + 1})
+            newEvent = new TimeEvent(t, parseInt( value, 10));
         }
-        //this.setState({index: this.state.index + 1})
-        const newEvent = new TimeEvent(t, parseInt( value, 10));
+        
         
 
         return newEvent
@@ -125,13 +123,19 @@ class Realtime extends React.Component {
             const t = new Date(this.state.time.getTime() + increment);
             const event = this.getNewEvent(t);
 
-            // Raw events
-            const newEvents = this.state.events;
-            newEvents.push(event);
-            this.setState({ time: t, events: newEvents });
+            if (event === null) {
+                clearInterval(this.interval)
+            } else {
+                // Raw events
+                const newEvents = this.state.events;
+                            
+                newEvents.push(event);
+                this.setState({ time: t, events: newEvents });
 
-            // Let our aggregators process the event
-            this.stream.addEvent(event);
+                // Let our aggregators process the event
+                this.stream.addEvent(event);
+            }
+            
         }, rate);
     }
 
