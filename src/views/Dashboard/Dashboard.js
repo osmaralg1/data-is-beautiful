@@ -23,7 +23,6 @@ import Table from 'views/Table/Table';
 import Realtime from 'views/RealtimeChart/TimeSeries.js';
 import {formatDateOnlyDate} from "utils/date";
 
-import { getData } from "variables/simulation/simulationRealData";
 
 const useStyles = makeStyles(styles);
 
@@ -39,11 +38,13 @@ function Dashboard(props) {
   }
 
   const [data,
-    setData] = useState(getData("Germany"));
+    setData] = useState(null);
 
 
   const onTick = (newData) => {
-    // setData(newData)
+    if (newData === null || newData === undefined)
+      return
+    setData(newData)
   }
 
   const classes = useStyles();

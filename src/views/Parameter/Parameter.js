@@ -17,7 +17,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import { getData } from "variables/simulation/simulationRealData";
 
 
-const initCountry = "Germany"
+const initCountry = "Italy"
 
 
 export default function Parameter(props) {
