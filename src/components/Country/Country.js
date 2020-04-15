@@ -9,6 +9,9 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Localize from "components/Localize/Localize.js";
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 import countries from "assets/misc/countries.json";
+import { getData } from "variables/simulation/simulationRealData";
+
+import { setGlobal, useGlobal } from 'reactn';
 
 var Enumerable = require('linq');
 
@@ -35,22 +38,23 @@ function CountryDropDown(props) {
     }
 
     const setSelectedCountry = (country) => {
-        if (props.onSelectedCountry !== null && props.onSelectedCountry !== undefined) 
-            props.onSelectedCountry(country)
+        setGlobal({
+            country: country.country,
+            data: getData(country.country)
+          });
+        if (props.onCountryChanged !== null && props.onCountryChanged !== undefined) {
+            props.onCountryChanged(country.country)
+        }
     }
 
     return ([ < Localize getTranslations = {
             getTranslations
-        } />, < CustomDropdown noLiPadding buttonText = { < Translate id = {
-                props.activeLanguage !== null && props.activeLanguage !== undefined
-                    ? "chooseCountry"
-                    : "en.language"
-            } />
+        } />, < CustomDropdown  noLiPadding buttonText = { useGlobal("country")
         }
         buttonProps = {{
             className: classes.navLink,
             color: "transparent",
-            textColor: props.whiteColor === true ? "white" : null
+            style:{fontSize: 20}
           }}
         buttonIcon = {
             Apps

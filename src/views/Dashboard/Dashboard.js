@@ -16,6 +16,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import Localize from "components/Localize/Localize.js";
 import RealtimeChart from "views/RealtimeChart/RealtimeChart.js";
 import Parameter from "views/Parameter/Parameter.js";
+import Statistic from "views/Statistic/Statistic.js";
 
 import {withLocalize} from "react-localize-redux";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
@@ -47,27 +48,70 @@ function Dashboard(props) {
     setData(newData)
   }
 
+  const [restart,
+    setRestart] = useState(false);
+
+
   const classes = useStyles();
   return (
     <div>
     <GridContainer>
 
+    
       <GridItem xs={12} sm={6} md={6}>
-        <Parameter onTick={onTick}></Parameter>
+
+        <Parameter onTick={onTick} restart={() => {
+          setRestart(oldRestart => !oldRestart)}
+          }></Parameter>
+        <Statistic data={data} restart={restart}></Statistic>
       </GridItem>
       <GridItem xs={12} sm={6} md={6}>
-        <Realtime data={data} function="infection"></Realtime>
+        <Realtime data={data} function="infection" 
+              bar_color='#1a97cc'
+              height="250"
+              color={"info"}
+              restart={restart}
+              timestampTitle={props.translate("day")}
+              title={props.translate("infected")}></Realtime>
+      </GridItem> 
+      <GridItem xs={12} sm={12} md={4}>
+        <Realtime data={data} function="symptoms" bar_color='#037902'
+          restart={restart}
+              height="200"
+              color={"success"}
+              timestampTitle={< Translate id = {
+              `day`
+            } > </Translate>}
+              title={< Translate id = {
+              `symptomatic`
+            } > </Translate>}></Realtime>
       </GridItem>
       <GridItem xs={12} sm={12} md={4}>
-        <Realtime data={data} function="symptoms"></Realtime>
+        <Realtime data={data} function="ill" bar_color='#c2d232'
+              height="200"
+              restart={restart}
+              color={"warning"}
+              timestampTitle={< Translate id = {
+              `day`
+            } > </Translate>}
+              title={< Translate id = {
+              `seriouslyill`
+            } > </Translate>} ></Realtime>
       </GridItem>
       <GridItem xs={12} sm={12} md={4}>
-        <Realtime data={data} function="ill"></Realtime>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={4}>
-        <Realtime data={data} function="deads"></Realtime>
-      </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
+        <Realtime data={data} function="deads" bar_color='#ec4c49'
+              height="200"
+              restart={restart}
+              color={"danger"}
+              timestampTitle={< Translate id = {
+              `day`
+            } > </Translate>}
+              title={< Translate id = {
+              `livelost`
+            } > </Translate>}></Realtime>
+      </GridItem> 
+             
+              {/* <GridItem xs={12} sm={12} md={12}>
 
           <Table
             doNotFetch={true}
@@ -101,14 +145,9 @@ function Dashboard(props) {
 
             ></Table>
 
-        </GridItem>
-    </GridContainer>
-      {/**
-      <GridContainer>
-        <GridItem xs={12} sm={6} md={6}>
-          <Parameter onTick={onTick}></Parameter>
-        </GridItem>
-        </GridContainer/>
+        </GridItem> 
+
+{/* 
         <GridItem xs={12} sm={6} md={6}>
           <Card chart>
             <RealtimeChart
@@ -198,9 +237,10 @@ function Dashboard(props) {
             </CardFooter>
           </Card>
         </GridItem>
-
-      </GridContainer>**/}
-      <Localize getTranslations={getTranslations}/>
+         */}
+        <Localize getTranslations={getTranslations}/>
+      </GridContainer>
+      
 
     </div>
   )

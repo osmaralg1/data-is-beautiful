@@ -16,17 +16,17 @@ import corona from "variables/assets/img/corona.jpg";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import { getData } from "variables/simulation/simulationRealData";
 
-
-const initCountry = "Italy"
+import { useGlobal } from 'reactn';
+const initCountry = "Belgium"
 
 
 export default function Parameter(props) {
 
   const [country,
-    setCountry] = React.useState(initCountry);
+    setCountry] = useGlobal("country");
 
   const [data,
-      setData] = React.useState(getData(initCountry));
+      setData] = useGlobal("data");
     
   const [stop,
       setStop] = React.useState(false);
@@ -38,10 +38,14 @@ export default function Parameter(props) {
     setStop(true)
   }
 
+  
+
   const restart = () => {
-    if (props.restart  !== null && props.restart !== undefined) {
+    setStop(true)
+    if (props.restart !== null && props.restart !== undefined) {
       props.restart()
     }
+    setIndex(0)
     setStop(false)
   }
 
@@ -57,48 +61,39 @@ export default function Parameter(props) {
           setTimeout(() => {
             
             if (stop || props.stop ) {
-              
               return clearInterval(interval)
             }
             if (mounted) { //*********************************************
 
               var lastIndex = null
               setIndex(oldIndex => {
-
-                
                 if (oldIndex > data.length - 1){
                   return clearInterval(interval)
                 } else {
                   lastIndex = oldIndex
                   return oldIndex + 1
                 }
-                
-                  
               })
 
               if (props.onTick !== null && props.onTick !== undefined) {
                 props.onTick(data[lastIndex])
               }
             } //*********************************************************
-          }, 200);
-        }, 200);
-    
-  
+          }, 100);
+        }, 100);
       // }
       
     return () => {
       mounted = false;
     };
-  }, [stop]);
+  }, [stop, index, country]);
  
 
 
   return (
-    <div>
 
-      {/* <Localize getTranslations={getTranslations}/> */}
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+     
+
           <Card profile>
             <CardAvatar profile>
               <a href="#corona" onClick={e => e.preventDefault()}>
@@ -107,30 +102,27 @@ export default function Parameter(props) {
             </CardAvatar>
             <CardBody >
               <GridContainer>
-                <GridItem xs={12} sm={4} md={4}>
-                  <CountryDropDown
-                    onSelectedCountry={(country) => {
-                      setData(country.country)
-                      setCountry(country.country)
-                  }}></CountryDropDown>
-                  <h3>{country}</h3>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CountryDropDown onCountryChanged={() => restart()}
+                    ></CountryDropDown>
+                  {/* <h3>{useGlobal("country")}</h3> */}
 
                 </GridItem>
-                <GridItem xs={12} sm={8} md={8}>
+                <GridItem xs={12} sm={12} md={12}>
                   <GridContainer>
-                  <GridItem xs={12} sm={2} md={2}>
+                  <GridItem xs={12} sm={4} md={4}>
                       <Icon onClick={() => start()}
                         >
                         {<Play></Play>}
                       </Icon>
                     </GridItem>
-                    <GridItem xs={12} sm={2} md={2}>
+                    <GridItem xs={12} sm={4} md={4}>
                       <Icon onClick={() => pause()}
                         >
                         {<Pause></Pause>}
                       </Icon>
                     </GridItem>
-                    <GridItem xs={12} sm={2} md={2}>
+                    <GridItem xs={12} sm={4} md={4}>
                       <Icon onClick={() => restart()}
                         >
                         {<Restart></Restart>}
@@ -149,7 +141,7 @@ export default function Parameter(props) {
                       </Icon>
                     </GridItem> */}
                   </GridContainer>
-                  <GridContainer>
+                  {/* <GridContainer>
                   <GridItem xs={12} sm={6} md={6}>
                   <CustomInput
                     labelText="Velocity"
@@ -174,15 +166,12 @@ export default function Parameter(props) {
                     }}
                   />
                     </GridItem>
-                  </GridContainer>
+                  </GridContainer> */}
 
                 </GridItem>
               </GridContainer>
             </CardBody>
           </Card>
-        </GridItem>
 
-      </GridContainer>
-    </div>
   );
 }

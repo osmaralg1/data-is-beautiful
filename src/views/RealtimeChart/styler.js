@@ -138,7 +138,7 @@ export class Styler {
             cursor: "pointer"
         };
         const valueStyle = {
-            fontSize: "smaller",
+            fontSize: "big",
             color: "#999",
             cursor: "pointer"
         };

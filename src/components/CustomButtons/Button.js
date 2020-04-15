@@ -42,7 +42,7 @@ export default function RegularButton(props) {
     [className]: className
   });
   return (
-    <Button {...rest} classes={muiClasses} className={btnClasses} style={{color: textColor}} >
+    <Button {...rest} classes={muiClasses} className={btnClasses}  >
       {children}
     </Button>
   );

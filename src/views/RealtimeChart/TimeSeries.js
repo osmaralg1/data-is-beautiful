@@ -10,8 +10,16 @@
 
 import React from "react";
 import Ring from "ringjs";
+import CardHeader from "components/Card/CardHeader.js";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import AnimatedNumber from 'react-animated-number';
 
-import { funcMap } from "variables/simulation/simulationRealData";
+import {numberWithCommas} from "utils/misc";
+import {formatDateOnlyDate} from "utils/date";
+
+import {funcMap } from "variables/simulation/simulationRealData";
+
 import {
     TimeSeries,
     TimeRange,
@@ -49,7 +57,8 @@ class Realtime extends React.Component {
         percentile50Out: new Ring(100),
         percentile90Out: new Ring(100),
         max: 0,
-        initialBeginTime: null
+        initialBeginTime: null,
+        value: 0
     };
 
 
@@ -62,10 +71,10 @@ class Realtime extends React.Component {
 
         pipeline()
             .from(this.stream)
-            .windowBy( "2800m")
+            .windowBy( "1d")
             .emitOn("discard")
             .aggregate({
-                value: { value: percentile(90) }
+                value: { value: percentile(100) }
             })
             .to(EventOut, event => {
                 const events = this.state.percentile90Out;
@@ -75,7 +84,7 @@ class Realtime extends React.Component {
 
         pipeline()
             .from(this.stream)
-            .windowBy("600m")
+            .windowBy("1d")
             .emitOn("discard")
             .aggregate({
                 value: { value: percentile(50) }
@@ -92,14 +101,58 @@ class Realtime extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        if (prevProps.restart != this.props.restart) {
+            this.setState({
+                events: new Ring(200),
+                percentile50Out: new Ring(100),
+                percentile90Out: new Ring(100),
+                max: 0,
+                initialBeginTime: null
+            })
+
+            this.stream = new Stream();
+
+            pipeline()
+                .from(this.stream)
+                .windowBy( "1d")
+                .emitOn("discard")
+                .aggregate({
+                    value: { value: percentile(100) }
+                })
+                .to(EventOut, event => {
+                    const events = this.state.percentile90Out;
+                    events.push(event);
+                    this.setState({ percentile90Out: events });
+                });
+    
+            pipeline()
+                .from(this.stream)
+                .windowBy("1d")
+                .emitOn("discard")
+                .aggregate({
+                    value: { value: percentile(50) }
+                })
+                .to(EventOut, event => {
+                    const events = this.state.percentile50Out;
+                    events.push(event);
+                    this.setState({ percentile50Out: events });
+                });
+                
+            return
+        }
+
         if (prevProps.data === this.props.data) {
             return
         }
+
+        
 
         if (this.props.data !== null && this.props.data !== undefined) {      
             const timestamp = new Date(this.props.data.lastUpdate + increment);
             
             const value = funcMap[this.props.function](this.props.data, prevProps.data)
+            if (value === null)
+                return
         
             let max = this.state.max
             if (value > max)
@@ -113,9 +166,9 @@ class Realtime extends React.Component {
                         
             newEvents.push(event);
             if (this.state.initialBeginTime === null) {
-                this.setState({events: newEvents, max: max, initialBeginTime: timestamp});
+                this.setState({events: newEvents, max: max, value: value, initialBeginTime: timestamp});
             } else {
-                this.setState({events: newEvents, max: max});
+                this.setState({events: newEvents, max: max, value: value});
             }
             
 
@@ -131,11 +184,15 @@ class Realtime extends React.Component {
         
 
         const fiveMinuteStyle = {
+            
             value: {
-                normal: { fill: "#619F3A", opacity: 0.2 },
-                highlight: { fill: "619F3A", opacity: 0.5 },
-                selected: { fill: "619F3A", opacity: 0.5 }
+                normal: { fill: "#FFFFFF", 
+                // opacity: 0.2 
+            },
+                highlight: { fill: "#FFFFFF", opacity: 0.5 },
+                selected: { fill: "#FFFFFF", opacity: 0.5 }
             }
+            
         };
 
         const scatterStyle = {
@@ -157,18 +214,22 @@ class Realtime extends React.Component {
             events: this.state.percentile50Out.toArray()
         });
 
+
         const perc90Series = new TimeSeries({
             name: "five minute perc90",
             events: this.state.percentile90Out.toArray()
         });
 
         // Charts (after a certain amount of time, just show hourly rollup)
+        const style = styler();
+
         const charts = (
-            <Charts>
+            <Charts style={style}>
                 <BarChart
                     axis="y"
                     series={perc90Series}
                     style={fiveMinuteStyle}
+                    height={500}
                     columns={["value"]}
                 />
        
@@ -182,10 +243,7 @@ class Realtime extends React.Component {
             borderColor: "#F4F4F4"
         };
 
-        const style = styler([
-            { key: "perc50", color: "#C5DCB7", width: 1, dashed: true },
-            { key: "perc90", color: "#DFECD7", width: 2 }
-        ]);
+        
 
         // Timerange for the chart axis
         if (this.props.data !== null && this.props.data !== undefined) {
@@ -205,35 +263,52 @@ class Realtime extends React.Component {
             const timeRange = new TimeRange(beginTime, endTime);
 
             return (
-                <div>
-                    <div className="row">
-                        <div className="col-md-4">
-                        </div>
-                        <div className="col-md-8">
-                            <span style={dateStyle}>{endTime.toString()}</span>
-                        </div>
-                    </div>
-                    <hr />
-                    <div className="row">
-                        <div className="col-md-12">
-                            <Resizable>
-                                <ChartContainer timeRange={timeRange}>
-                                    <ChartRow height="150">
+                
+                <Card style={{fontSize: "20px"}}>
+                        <CardHeader color={this.props.color} >
+                            <Resizable >
+                                <ChartContainer  timeRange={timeRange} timeAxisStyle = {{ axis: { stroke: "white", pointerEvents: "none"}, values: { stroke: "none", fill: "white", font: "13px sans-serif" }}
+                            }  >
+                                    <ChartRow height={this.props.height} >
                                         <YAxis
                                             id="y"
-                                            label="Value"
+                                            label= "Value"
                                             min={0}
                                             max={this.state.max}
                                             width="70"
                                             type="linear"
+                                            style={{ label: { stroke: "none", fill: "white", font: "13px sans-serif"},  values: { stroke: "none", fill: "white", font: "13px sans-serif"}}}
                                         />
                                         {charts}
                                     </ChartRow>
                                 </ChartContainer>
                             </Resizable>
-                        </div>
-                    </div>
-                </div>
+                            </CardHeader>
+                            <CardBody>
+                            <h5 >{this.props.title}</h5>
+        <p style={{
+          fontSize: 16
+        }}>
+          {this.props.timestampTitle}
+          {" "}
+          {this.props.data !== null && this.props.data !== undefined
+            ? formatDateOnlyDate(this.props.data.lastUpdate)
+            : ""}
+          {":  "}
+          <AnimatedNumber
+            style={{
+            transition: '0.8s ease-out',
+            transitionProperty: 'background-color, color',
+            fontSize: 25,
+            fontWeight: 600
+          }}
+            stepPrecision={0}
+            value={this.state.value}
+            formatValue={n => `${numberWithCommas(n)} `}/>
+
+        </p>
+                            </CardBody>
+                    </Card>
             );
         } else {
             return null

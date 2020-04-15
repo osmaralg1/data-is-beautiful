@@ -53,8 +53,9 @@ export function deads(data, previousData) {
     if (data === null || data === undefined) {
         return null
     }
+    
     if (previousData === null || previousData === undefined) {
-        return data["deaths"]
+        return  ""
     }
     
     return data["deaths"] - previousData["deaths"]

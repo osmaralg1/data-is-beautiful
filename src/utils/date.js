@@ -1,13 +1,13 @@
 export function formatDateOnlyDate(dateString) {
     if (dateString === null || dateString === undefined) 
-        return null
+        return ""
     var d = new Date(dateString);
     var date = addZero(d.getDate(), 2);
     var month = addZero(d.getMonth() + 1, 2);
 
     var year = d.getFullYear()
     return date + "-" + month + "-" + year
-    // + ":" + ms;
+    
 }
 
 function addZero(x, n) {

@@ -24,12 +24,16 @@ import { setGlobal } from 'reactn';
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
 import {configuration} from 'variables/configuration'
+import { getData } from "variables/simulation/simulationRealData";
 
 import App from 'components/App/App'
-
+const initCountry = "Belgium"
 
 setGlobal({
-  configuration: configuration
+  configuration: configuration,
+  country: initCountry,
+  data: getData(initCountry),
+  index: 0
 });
 
 const getReduxStore = () => {
