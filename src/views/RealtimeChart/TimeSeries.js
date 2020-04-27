@@ -14,6 +14,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import AnimatedNumber from 'react-animated-number';
+import 'assets/css/cardHeader.css'; // Tell webpack that Button.js uses these styles
 
 import {numberWithCommas} from "utils/misc";
 import {formatDateOnlyDate} from "utils/date";
@@ -38,6 +39,7 @@ import {
     ScatterChart,
     BarChart,
     Resizable,
+    Baseline,
 } from "react-timeseries-charts";
 
 import styler from "./styler";
@@ -61,7 +63,6 @@ class Realtime extends React.Component {
         value: 0
     };
 
-
     componentDidMount() {
         //
         // Setup our aggregation pipelines
@@ -80,19 +81,6 @@ class Realtime extends React.Component {
                 const events = this.state.percentile90Out;
                 events.push(event);
                 this.setState({ percentile90Out: events });
-            });
-
-        pipeline()
-            .from(this.stream)
-            .windowBy("1d")
-            .emitOn("discard")
-            .aggregate({
-                value: { value: percentile(50) }
-            })
-            .to(EventOut, event => {
-                const events = this.state.percentile50Out;
-                events.push(event);
-                this.setState({ percentile50Out: events });
             });
     }
 
@@ -182,38 +170,19 @@ class Realtime extends React.Component {
 
     render() {
         
-
         const fiveMinuteStyle = {
             
             value: {
-                normal: { fill: "#FFFFFF", 
-                // opacity: 0.2 
+                normal: { fill: "#FFFFFF", opacity: 0.2 },
+                highlight: { fill: "FFFFFF", opacity: 0.5 },
+                selected: { fill: "FFFFFF", opacity: 0.5 }
             },
-                highlight: { fill: "#FFFFFF", opacity: 0.5 },
-                selected: { fill: "#FFFFFF", opacity: 0.5 }
-            }
-            
+             axis: { fontSize: 11, textAnchor: "left", fill: "#ff0000" }, 
+             label: { fontSize: 12, textAnchor: "middle", fill: "#ff0000" }, 
+             values: { fill: "none", stroke: "none" },
+
+
         };
-
-        const scatterStyle = {
-            value: {
-                normal: {
-                    fill: "steelblue",
-                    opacity: 0.5
-                }
-            }
-        };
-
-        const eventSeries = new TimeSeries({
-            name: "raw",
-            events: this.state.events.toArray()
-        });
-
-        const perc50Series = new TimeSeries({
-            name: "five minute perc50",
-            events: this.state.percentile50Out.toArray()
-        });
-
 
         const perc90Series = new TimeSeries({
             name: "five minute perc90",
@@ -224,26 +193,29 @@ class Realtime extends React.Component {
         const style = styler();
 
         const charts = (
-            <Charts style={style}>
-                <BarChart
-                    axis="y"
-                    series={perc90Series}
-                    style={fiveMinuteStyle}
-                    height={500}
-                    columns={["value"]}
-                />
-       
-            </Charts>
-        );
 
+                <Charts style={style}>
+                    <BarChart
+                        axis="y"
+                        series={perc90Series}
+                        style={fiveMinuteStyle}
+                        height={500}
+                        columns={["value"]}
+                        
+                    />
+                    <Baseline axis="value" value={1000} label="Avg" position="right" />
+                </Charts>
+
+
+        );
         const dateStyle = {
             fontSize: 12,
-            color: "#AAA",
-            borderWidth: 1,
+            color: "#FFFFFF",
+            borderWidth: 3,
             borderColor: "#F4F4F4"
         };
 
-        
+
 
         // Timerange for the chart axis
         if (this.props.data !== null && this.props.data !== undefined) {

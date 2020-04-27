@@ -17,12 +17,14 @@ export default function CardHeader(props) {
   const { className, children, color, plain, stats, icon, ...rest } = props;
   const cardHeaderClasses = classNames({
     [classes.cardHeader]: true,
-    [classes[color + "CardHeader"]]: color,
+    //[classes[color + "CardHeader"]]: color,
     [classes.cardHeaderPlain]: plain,
     [classes.cardHeaderStats]: stats,
     [classes.cardHeaderIcon]: icon,
     [className]: className !== undefined
   });
+  console.log("classes", classes)
+  console.log("card CardHeader classes" ,cardHeaderClasses)
   return (
     <div className={cardHeaderClasses} {...rest}>
       {children}
@@ -38,7 +40,7 @@ CardHeader.propTypes = {
     "danger",
     "info",
     "primary",
-    "rose"
+    "rose",
   ]),
   plain: PropTypes.bool,
   stats: PropTypes.bool,

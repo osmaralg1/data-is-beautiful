@@ -1,0 +1,18 @@
+
+
+.cardHeader{
+	letter-spacing: normal !important;
+	-webkit-font-smoothing: antialiased;
+	z-index: 3 !important;
+	border-bottom: none;
+	color: #1a2737;
+	margin: 0 15px;
+	position: relative;
+	background: linear-gradient(60deg, #1a2737, #ffffff);
+	box-shadow: 0 4px 20px 0 #1a2737, 0 7px 10px -5px #1a2737;
+	padding: 15px;
+	margin-top: -20px;
+	border-radius: 3px;
+	background-color: rgb(26, 39, 55);
+
+}
